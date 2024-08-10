@@ -8,7 +8,8 @@ Saya menggunakan html, css serta javascript dalam pembuatan project portofolio i
 
 cara menjalankan program ini adalah dengan mendownload semua file yang ada lalu membuka file index.html
 
-Tidak ada bonus yang saya kerjakan karena keterbatasan waktu saya.
+Bonus yang saya kerjakan adalah dengan deploy melalui vercell.
+link deploy yaitu https://portofolio-iota-blue.vercel.app/.
 
 Kesulitan yang saya hadapi adalah waktu yang saya miliki menurut saya tidak begitu banyak, termasuk juga dengan manajemen waktu saya yang mungkin bisa dinilai kurang baik. sehingga saya baru bisa mengerjakan project ini tidak lama sebelum batas akhir pengumpulan.
 
