@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+        <nav>
+            <button onclick="showSection('about')">About Me</button>
+            <button onclick="showSection('passion')">Interest</button>
+            <button onclick="showSection('projects')">Projects</button>
+            <button onclick="showSection('achievements')">Achievements</button>
+            <button onclick="showSection('contact')">Contact</button>
+        </nav>
+    </header>
+    <main>
+        <section id="about">
+            <img src="photo.jpg" alt="Your Picture">
+            <h2>About Me</h2>
+            <p>Hi, I'm Muhammad Timur Kanigara, usually called Timur. I am a 2nd year undergraduate student of Informatics Engineering at Instutut Teknologi Bandung. </p>
+            <button onclick="toggleDetails('about-details')">Read More</button>
+            <div id="about-details" class="details">
+                <p>I am a hard worker, adaptable in new environments, complete work to completion, and always curious and learning. </p>
+            </div>
+        </section>
+        <section id="passion">
+            <h2>Interest</h2>
+            <p>I am interested in software engineering, especially currently regarding websites.</p>
+            <button onclick="toggleDetails('passion-details')">Read More</button>
+            <div id="passion-details" class="details">
+                <p>I am still learning in software engineering and in website creation. This portfolio is my first website, and I hope it will be better in the future.</p>
+            </div>
+        </section>
+        <section id="achievements">
+            <h2>Achievements</h2>
+            <ul>
+                <li>Head of the Accommodation and Transportation division of the "STEI-Kesyen"</li>
+                <li>Deputy Head of Event Division at Pendidikan Tingkat Dasar KSEP 2024</li>
+            </ul>
+            <button onclick="toggleDetails('achievements-details')">Read More</button>
+            <div id="achievements-details" class="details">
+                <ul>
+                    <li>1. Head of the Accommodation and Transportation division of the "STEI-Kesyen" : </li>
+                    <li>I take care of accommodation for the STEI-K social night and find and provide transportation for the participants.
+                    </li>
+                    <li>2. Deputy Head of Event Division at Pendidikan Tingkat Dasar KSEP 2024: </li>
+                    <li>I design technical matters related to the event, starting from the rundown, venue, concept, field techniques, MC and cue cards, as well as riddles and treasure hunts for participants.
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>Analyzing a parking barrier mechanism for an apartment</li>
+                <li>Create a game that can be played in a terminal</li>
+            </ul>
+            <button onclick="toggleDetails('projects-details')">Read More</button>
+            <div id="projects-details" class="details">
+                <ul>
+                    <li>1. Analyzing a parking barrier mechanism for an apartment:</li>
+                    <li>I analyzed and then created code and flowchart of the mechanism of a parking barrier. This project is done in groups with division of tasks.</li>
+                    <li>2. Create a game that can be played in a termianl:</li>
+                    <li>I design, design, and create a game like pokemon with home, inventory, laboratory, battle, arena, and shop mechanisms. This project is done in groups with division of tasks.</li>
+                </ul>
+            </div>
+        </section>
+        <section id="contact">
+            <h2>Contact</h2>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/timurkanigara/">LinkedIn</a></li>
+                <li><a href="https://www.instagram.com/tkanigara">Instagram</a></li>
+                <li><a href="https://github.com/tkanigara">GitHub</a></li>
+            </ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
