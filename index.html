@@ -3,89 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>Timur Kanigara | Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>My Portfolio</h1>
     <nav>
-      <a href="#about">About Me</a>
-      <a href="#passion">Interest</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
       <a href="#achievements">Achievements</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <main>
-    <section id="about">
-      <img src="photo.jpg" alt="Your Picture">
-      <h2>About Me</h2>
-      <p>Hi, I'm Muhammad Timur Kanigara, usually called Timur. I am a 2nd year undergraduate student of Informatics Engineering at Institut Teknologi Bandung.</p>
-      <details>
-        <summary>Read More</summary>
-        <p>I am a hard worker, adaptable in new environments, complete work to completion, and always curious and learning.</p>
-      </details>
-    </section>
+  <!-- Home -->
+  <section id="home" class="snap">
+    <div class="intro">
+      <img src="photo.jpg" alt="Profile Picture" class="profile-pic">
+      <h1>Hi, I'm <span class="highlight">Muhammad Timur Kanigara</span></h1>
+      <p class="tagline">Informatics Engineering Student | Web & Software Enthusiast</p>
+    </div>
+  </section>
 
-    <section id="passion">
-      <h2>Interest</h2>
-      <p>I am interested in software engineering, especially currently regarding websites.</p>
-      <details>
-        <summary>Read More</summary>
-        <p>I am still learning in software engineering and in website creation. This portfolio is my first website, and I hope it will be better in the future.</p>
-      </details>
-    </section>
+  <!-- About -->
+  <section id="about" class="snap">
+    <h2>About Me</h2>
+    <p>
+      I'm a 3nd-year Informatics Engineering student at Institut Teknologi Bandung. 
+      I am adaptable, hardworking, and always curious to learn new things. 
+      I love exploring software engineering, especially web development.
+    </p>
+  </section>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li>Analyzing a parking barrier mechanism for an apartment</li>
-        <li>Create a game that can be played in a terminal</li>
-        <li>Create a website "Bin Buddy" with interactive map and waste management info</li>
-        <li>Developed regression & interpolation program for computational methods</li>
-      </ul>
-      <details>
-        <summary>Read More</summary>
-        <ul>
-          <li><b>Parking barrier analysis</b>: Made code & flowchart of mechanism.</li>
-          <li><b>Terminal game</b>: Designed & built turn-based game like Pokémon.</li>
-          <li><b>Bin Buddy Website</b>: Frontend dev, Home page design & interactive layout. 
-            <a href="https://itb-binbuddy.vercel.app/">Link</a>
-          </li>
-          <li><b>Computational program</b>: Built ADT Matrix, Gauss-Jordan solver, multiple regression tools.</li>
-        </ul>
-      </details>
-    </section>
+  <!-- Skills -->
+  <section id="skills" class="snap">
+    <h2>Skills</h2>
+    <div class="skills-container">
+      <div class="skill"><span>C++</span><div class="bar"><div style="width:70%"></div></div></div>
+      <div class="skill"><span>Python</span><div class="bar"><div style="width:80%"></div></div></div>
+      <div class="skill"><span>Web Development (HTML/CSS/JS)</span><div class="bar"><div style="width:75%"></div></div></div>
+      <div class="skill"><span>Java</span><div class="bar"><div style="width:70%"></div></div></div>
+    </div>
+  </section>
 
-    <section id="achievements">
-      <h2>Achievements</h2>
-      <ul>
-        <li>Head of Accommodation & Transportation – STEI-Kesyen</li>
-        <li>Deputy Head of Event Division – KSEP 2024</li>
-      </ul>
-      <details>
-        <summary>Read More</summary>
-        <ul>
-          <li><b>STEI-Kesyen</b>: Arranged accommodation & transport for social night.</li>
-          <li><b>KSEP 2024</b>: Designed rundown, venue concept, field techniques, games.</li>
-        </ul>
-      </details>
-    </section>
+  <!-- Projects -->
+  <section id="projects" class="snap">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="card">
+        <h3>Bin Buddy</h3>
+        <p>Interactive map to locate waste bins & learn waste management at ITB.</p>
+        <a href="https://itb-binbuddy.vercel.app/" target="_blank">Visit</a>
+      </div>
+      <div class="card">
+        <h3>O.W.C.A Logistics</h3>
+        <p>A sophisticated, enterprise-grade JavaFX application for comprehensive courier and logistics management with advanced plugin architecture and real-time shipment tracking.</p>
+        <a href="https://github.com/Labpro-21/if2010-tubes-2-2425-kkp/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
+      </div>
+      <div class="card">
+        <h3>Little Alchemy Solver</h3>
+        <p>Recipe Search Application for Little Alchemy Game using BFS, DFS, and BDS Algorithms</p>
+        <a href="https://tubes2-jumbo-uncut.vercel.app/" target="_blank">Visit</a>
+      </div>
+      <div class="card">
+        <h3>Purry Leveling</h3>
+        <p>A C++ turn-based RPG with a dungeon system where players choose classes, battle monsters, collect items, and develop skills.</p>
+        <a href="https://github.com/tkanigara/PurryLeveling/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
+      </div>
+      <div class="card">
+        <h3>CV ATS</h3>
+        <p>A Python application utilizing KMP and Boyer-Moore string matching for resume screening, integrated with MySQL database, encryption features, and a GUI interface.</p>
+        <a href="https://github.com/tkanigara/CV_ATS/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
+      </div>
+      <div class="card">
+        <h3>Luma_OSJang</h3>
+        <p>An operating system built from scratch for an OS course project, featuring a custom kernel, filesystem, process management, memory management, and shell running on QEMU.</p>
+        <a href="https://github.com/tkanigara/Luma_OSjang/archive/refs/heads/indah8.zip" class="download" download target="_blank">Download ZIP</a>
+      </div>
+    </div>
+  </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <ul>
-        <li><a href="https://www.linkedin.com/in/timurkanigara/">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/tkanigara">Instagram</a></li>
-        <li><a href="https://github.com/tkanigara">GitHub</a></li>
-      </ul>
-    </section>
-  </main>
+  <!-- Achievements -->
+  <section id="achievements" class="snap">
+    <h2>Achievements</h2>
+    <div class="timeline">
+      <div class="event">
+        <h3>Director of Event - INFEST KSEP ITB 2025</h3>
+        <p>Leading the planning and execution of a major festival on economics and capital markets featuring seminars, talkshows, interactive booths, games, and supporting activities.</p>
+      </div>
+      <div class="event">
+        <h3>Deputy Head of Event Division - SPARTA HMIF 2024</h3>
+        <p>Designing, coordinating, and overseeing the entire orientation program for new HMIF ITB members to ensure a smooth, engaging, and impactful experience.</p>
+      </div>
+      <div class="event">
+        <h3>Deputy Head of Event Division - KSEP 2024</h3>
+        <p>Designed event rundown, technical concepts, MC guides, and participant games.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="snap">
+    <h2>Contact</h2>
+    <p>Feel free to connect with me:</p>
+    <ul class="social-links">
+      <li><a href="mailto:timurkanigara@example.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/timurkanigara/" target="_blank">LinkedIn</a></li>
+      <li><a href="https://github.com/tkanigara" target="_blank">GitHub</a></li>
+      <li><a href="https://www.instagram.com/tkanigara" target="_blank">Instagram</a></li>
+    </ul>
+  </section>
 
   <footer>
-    <p>&copy; 2025 Muhammad Timur Kanigara</p>
+    <p>© 2025 Timur Kanigara. All rights reserved.</p>
   </footer>
 </body>
 </html>
