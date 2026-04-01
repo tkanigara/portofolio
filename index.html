@@ -399,7 +399,7 @@
     .exp-empty-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); line-height: 1.8; }
 
     /* ===================== SKILLS ===================== */
-    #skills { background: var(--surface); }
+    #skills { background: var(--bg); }
     .skills-list { display: flex; flex-direction: column; gap: 2rem; max-width: 640px; }
     .skill-item { position: relative; }
     .skill-meta { display: flex; justify-content: space-between; margin-bottom: 0.55rem; }
@@ -415,7 +415,7 @@
     }
 
     /* ===================== TECH STACK ===================== */
-    #techstack { background: var(--bg); }
+    #techstack { background: var(--surface); }
     .stack-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
@@ -441,7 +441,7 @@
     .stack-item:hover .stack-name { color: var(--accent); }
 
     /* ===================== PROJECTS ===================== */
-    #projects { background: var(--surface); }
+    #projects { background: var(--bg); }
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -502,7 +502,7 @@
     .project-link:hover { gap: 0.75rem; }
 
     /* ===================== ACHIEVEMENTS ===================== */
-    #achievements { background: var(--bg); }
+    #achievements { background: var(--surface); }
     .timeline { position: relative; padding-left: 3rem; }
     .timeline::before {
       content: '';
@@ -541,7 +541,7 @@
     .timeline-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; max-width: 540px; }
 
     /* ===================== CONTACT ===================== */
-    #contact { background: var(--surface); position: relative; overflow: hidden; text-align: center; }
+    #contact { background: var(--bg); position: relative; overflow: hidden; text-align: center; }
     #contact::before {
       content: 'CONTACT';
       position: absolute;
@@ -680,7 +680,7 @@
 
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
-      <span class="hero-scroll-label">Scroll</span>
+      <!-- <span class="hero-scroll-label">Scroll</span> -->
     </div>
   </section>
 
@@ -711,7 +711,7 @@
   </section>
 
   <!-- ==================== EXPERIENCE ==================== -->
-  <section id="experience">
+  <!-- <section id="experience">
     <div class="section-inner">
       <div class="section-header reveal">
         <div class="section-num">02</div>
@@ -721,7 +721,7 @@
         </div>
       </div>
 
-      <div class="exp-list">
+      <div class="exp-list"> -->
 
         <!--
         ================================================================
@@ -746,7 +746,7 @@
         -->
 
         <!-- Hapus div ini setelah ada experience -->
-        <div class="exp-empty">
+        <!-- <div class="exp-empty">
           <div class="exp-empty-icon">💼</div>
           <div class="exp-empty-label">
             Experience will be added soon.<br>
@@ -756,13 +756,13 @@
 
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ==================== SKILLS ==================== -->
   <section id="skills">
     <div class="section-inner">
       <div class="section-header reveal">
-        <div class="section-num">03</div>
+        <div class="section-num">02</div>
         <div class="section-title-group">
           <div class="section-eyebrow">Skills</div>
           <h2 class="section-title">Technical<br>Proficiencies</h2>
@@ -793,7 +793,7 @@
   <section id="techstack">
     <div class="section-inner">
       <div class="section-header reveal">
-        <div class="section-num">04</div>
+        <div class="section-num">03</div>
         <div class="section-title-group">
           <div class="section-eyebrow">Tech Stack</div>
           <h2 class="section-title">Tools &<br>Technologies</h2>
@@ -818,7 +818,7 @@
   <section id="projects">
     <div class="section-inner">
       <div class="section-header reveal">
-        <div class="section-num">05</div>
+        <div class="section-num">04</div>
         <div class="section-title-group">
           <div class="section-eyebrow">Projects</div>
           <h2 class="section-title">Things I've<br>Built</h2>
@@ -887,7 +887,7 @@
   <section id="achievements">
     <div class="section-inner">
       <div class="section-header reveal">
-        <div class="section-num">06</div>
+        <div class="section-num">05</div>
         <div class="section-title-group">
           <div class="section-eyebrow">Achievements</div>
           <h2 class="section-title">Leadership &<br>Milestones</h2>
