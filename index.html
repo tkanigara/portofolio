@@ -3,121 +3,1097 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timur Kanigara | Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Timur Kanigara — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface2: #1a1a26;
+      --accent: #e8c97e;
+      --accent2: #7eb8e8;
+      --text: #e8e4d9;
+      --muted: #6b6b80;
+      --border: rgba(232,201,126,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-follower {
+      width: 36px; height: 36px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s ease, width 0.3s, height 0.3s, opacity 0.3s;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+    }
+    a:hover ~ .cursor, button:hover ~ .cursor { transform: translate(-50%, -50%) scale(2); }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.3s;
+      cursor: none;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: grid !important;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 8rem 5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      right: 25%;
+      width: 1px;
+      background: var(--border);
+    }
+    .hero-bg-line2 {
+      position: absolute;
+      top: 0; bottom: 0;
+      right: 50%;
+      width: 1px;
+      background: var(--border);
+    }
+    .hero-circle {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+    }
+    .hero-circle2 {
+      position: absolute;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      right: -25px; top: 50%;
+      transform: translateY(-50%);
+    }
+    .hero-dot {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      right: 225px; top: 50%;
+      transform: translateY(-50%);
+    }
+    #home {
+      display: grid !important;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+    }
+    .hero-content {
+      animation: heroFadeIn 1.2s ease both;
+    }
+    /* PHOTO */
+    .hero-photo-wrap {
+      position: relative;
+      width: 320px;
+      flex-shrink: 0;
+      animation: heroFadeIn 1.4s ease both;
+      z-index: 1;
+    }
+    .hero-photo-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+    }
+    .hero-photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      z-index: -1;
+      opacity: 0.5;
+    }
+    .hero-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: -24px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      z-index: -2;
+    }
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.4s;
+    }
+    .hero-photo-frame:hover img {
+      filter: grayscale(0%) contrast(1.05);
+    }
+    .hero-photo-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      #home {
+        grid-template-columns: 1fr !important;
+      }
+      .hero-photo-wrap {
+        width: 200px;
+        margin: 0 auto;
+      }
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-label::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(232,201,126,0.25);
+    }
+    .btn-ghost {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent);
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: border-color 0.3s, background 0.3s;
+      cursor: none;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      background: rgba(232,201,126,0.05);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+    .scroll-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    section:not(#home) {
+      padding: 7rem 4rem;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--surface2);
+      line-height: 1;
+      user-select: none;
+    }
+    .section-title-group {
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    /* ABOUT */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .stat-card:hover { border-color: var(--accent); }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .stat-card:hover::after { transform: scaleX(1); }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* SKILLS */
+    #skills { background: var(--bg); }
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 650px;
+    }
+    .skill-item {
+      position: relative;
+    }
+    .skill-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+    .skill-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+    }
+    .skill-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+    .skill-track {
+      width: 100%;
+      height: 2px;
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .skill-fill.animated { transform: scaleX(1); }
+    .skill-dot {
+      position: absolute;
+      right: calc(100% - var(--pct));
+      top: 50%;
+      transform: translate(50%, -50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.5s 0.8s;
+    }
+    .skill-fill.animated ~ .skill-dot { opacity: 1; }
+
+    /* PROJECTS */
+    #projects { background: var(--surface); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .project-card {
+      background: var(--surface);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover { background: var(--surface2); }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232,201,126,0.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-idx {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+    }
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--text);
+    }
+    .project-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent);
+      transition: gap 0.2s;
+      cursor: none;
+    }
+    .project-link:hover { gap: 0.8rem; }
+    .project-link svg { transition: transform 0.2s; }
+    .project-link:hover svg { transform: translateX(3px); }
+    .project-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+    }
+    .project-tag.dl { color: #6be08e; background: rgba(107,224,142,0.08); }
+
+    /* ACHIEVEMENTS */
+    #achievements { background: var(--bg); }
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .timeline-item:nth-child(2) { transition-delay: 0.15s; }
+    .timeline-item:nth-child(3) { transition-delay: 0.3s; }
+    .timeline-dot {
+      position: absolute;
+      left: -3.35rem;
+      top: 0.3rem;
+      width: 12px; height: 12px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--bg);
+    }
+    .timeline-dot::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .timeline-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 550px;
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::before {
+      content: 'CONTACT';
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 15rem;
+      font-weight: 900;
+      color: var(--surface2);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .contact-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .contact-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+    .contact-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .contact-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 3.5rem;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232,201,126,0.05);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ANIMATIONS & REVEALS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      #home { padding: 6rem 1.5rem 4rem; }
+      section:not(#home) { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-circle, .hero-circle2, .hero-dot, .hero-bg-line, .hero-bg-line2 { display: none; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#achievements">Achievements</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <!-- Home -->
-  <section id="home" class="snap">
-    <div class="intro">
-      <img src="photo.jpg" alt="Profile Picture" class="profile-pic">
-      <h1>Hi, I'm <span class="highlight">Muhammad Timur Kanigara</span></h1>
-      <p class="tagline">Informatics Engineering Student | Web & Software Enthusiast</p>
-    </div>
-  </section>
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
-  <!-- About -->
-  <section id="about" class="snap">
-    <h2>About Me</h2>
-    <p>
-      I'm a 3nd-year Informatics Engineering student at Institut Teknologi Bandung. 
-      I am adaptable, hardworking, and always curious to learn new things. 
-      I love exploring software engineering, especially web development.
-    </p>
-  </section>
-
-  <!-- Skills -->
-  <section id="skills" class="snap">
-    <h2>Skills</h2>
-    <div class="skills-container">
-      <div class="skill"><span>C++</span><div class="bar"><div style="width:70%"></div></div></div>
-      <div class="skill"><span>Python</span><div class="bar"><div style="width:80%"></div></div></div>
-      <div class="skill"><span>Web Development (HTML/CSS/JS)</span><div class="bar"><div style="width:75%"></div></div></div>
-      <div class="skill"><span>Java</span><div class="bar"><div style="width:70%"></div></div></div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects" class="snap">
-    <h2>Projects</h2>
-    <div class="projects-grid">
-      <div class="card">
-        <h3>Bin Buddy</h3>
-        <p>Interactive map to locate waste bins & learn waste management at ITB.</p>
-        <a href="https://itb-binbuddy.vercel.app/" target="_blank">Visit</a>
-      </div>
-      <div class="card">
-        <h3>O.W.C.A Logistics</h3>
-        <p>A sophisticated, enterprise-grade JavaFX application for comprehensive courier and logistics management with advanced plugin architecture and real-time shipment tracking.</p>
-        <a href="https://github.com/Labpro-21/if2010-tubes-2-2425-kkp/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
-      </div>
-      <div class="card">
-        <h3>Little Alchemy Solver</h3>
-        <p>Recipe Search Application for Little Alchemy Game using BFS, DFS, and BDS Algorithms</p>
-        <a href="https://tubes2-jumbo-uncut.vercel.app/" target="_blank">Visit</a>
-      </div>
-      <div class="card">
-        <h3>Purry Leveling</h3>
-        <p>A C++ turn-based RPG with a dungeon system where players choose classes, battle monsters, collect items, and develop skills.</p>
-        <a href="https://github.com/tkanigara/PurryLeveling/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
-      </div>
-      <div class="card">
-        <h3>CV ATS</h3>
-        <p>A Python application utilizing KMP and Boyer-Moore string matching for resume screening, integrated with MySQL database, encryption features, and a GUI interface.</p>
-        <a href="https://github.com/tkanigara/CV_ATS/archive/refs/heads/main.zip" class="download" download target="_blank">Download ZIP</a>
-      </div>
-      <div class="card">
-        <h3>Luma_OSJang</h3>
-        <p>An operating system built from scratch for an OS course project, featuring a custom kernel, filesystem, process management, memory management, and shell running on QEMU.</p>
-        <a href="https://github.com/tkanigara/Luma_OSjang/archive/refs/heads/indah8.zip" class="download" download target="_blank">Download ZIP</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Achievements -->
-  <section id="achievements" class="snap">
-    <h2>Achievements</h2>
-    <div class="timeline">
-      <div class="event">
-        <h3>Director of Event - INFEST KSEP ITB 2025</h3>
-        <p>Leading the planning and execution of a major festival on economics and capital markets featuring seminars, talkshows, interactive booths, games, and supporting activities.</p>
-      </div>
-      <div class="event">
-        <h3>Deputy Head of Event Division - SPARTA HMIF 2024</h3>
-        <p>Designing, coordinating, and overseeing the entire orientation program for new HMIF ITB members to ensure a smooth, engaging, and impactful experience.</p>
-      </div>
-      <div class="event">
-        <h3>Deputy Head of Event Division - KSEP 2024</h3>
-        <p>Designed event rundown, technical concepts, MC guides, and participant games.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="snap">
-    <h2>Contact</h2>
-    <p>Feel free to connect with me:</p>
-    <ul class="social-links">
-      <li><a href="mailto:timurkanigara@example.com">Email</a></li>
-      <li><a href="https://www.linkedin.com/in/timurkanigara/" target="_blank">LinkedIn</a></li>
-      <li><a href="https://github.com/tkanigara" target="_blank">GitHub</a></li>
-      <li><a href="https://www.instagram.com/tkanigara" target="_blank">Instagram</a></li>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">T.K</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line2"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-circle2"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-content">
+      <div class="hero-label">Informatics Engineering · ITB</div>
+      <h1 class="hero-name">
+        Muhammad<br>
+        <em>Timur</em><br>
+        Kanigara
+      </h1>
+      <p class="hero-desc">
+        3rd-year student passionate about software engineering, web development, and building things that matter. Adaptable, curious, always learning.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <img src="photo.jpg" alt="Muhammad Timur Kanigara">
+        <div class="hero-photo-badge">Timur · IF-ITB '23</div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
   </section>
 
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-num">01</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">About Me</div>
+          <h2 class="section-title">The Person<br>Behind the Code</h2>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>I'm a <strong>3rd-year Informatics Engineering student</strong> at Institut Teknologi Bandung (ITB), one of Indonesia's leading technical universities.</p>
+          <p>I'm adaptable, hardworking, and always <strong>curious to learn new things</strong>. I love exploring software engineering, especially web development — from frontend design to backend systems.</p>
+          <p>Beyond coding, I'm deeply involved in <strong>organizational leadership</strong>, having directed and coordinated large-scale events for campus organizations.</p>
+        </div>
+        <div class="about-stats reveal">
+          <div class="stat-card">
+            <div class="stat-num">6+</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Org. Roles</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">4+</div>
+            <div class="stat-label">Languages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">ITB</div>
+            <div class="stat-label">Informatics '23</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-num">02</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Skills</div>
+          <h2 class="section-title">Technical<br>Proficiencies</h2>
+        </div>
+      </div>
+      <div class="skills-list">
+        <div class="skill-item reveal" data-delay="0">
+          <div class="skill-meta">
+            <span class="skill-name">Python</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" style="--pct:80%;" data-width="80"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal" data-delay="100">
+          <div class="skill-meta">
+            <span class="skill-name">Web Development (HTML / CSS / JS)</span>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" style="--pct:75%;" data-width="75"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal" data-delay="200">
+          <div class="skill-meta">
+            <span class="skill-name">C++</span>
+            <span class="skill-pct">70%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" style="--pct:70%;" data-width="70"></div>
+          </div>
+        </div>
+        <div class="skill-item reveal" data-delay="300">
+          <div class="skill-meta">
+            <span class="skill-name">Java</span>
+            <span class="skill-pct">70%</span>
+          </div>
+          <div class="skill-track">
+            <div class="skill-fill" style="--pct:70%;" data-width="70"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-num">03</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Projects</div>
+          <h2 class="section-title">Things I've<br>Built</h2>
+        </div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-idx">01 / Web App</div>
+          <div class="project-name">Bin Buddy</div>
+          <div class="project-tag">Interactive Map</div>
+          <p class="project-desc">Interactive map to locate waste bins and learn waste management practices at ITB campus.</p>
+          <a href="https://itb-binbuddy.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-idx">02 / Desktop App</div>
+          <div class="project-name">O.W.C.A Logistics</div>
+          <div class="project-tag dl">JavaFX</div>
+          <p class="project-desc">Enterprise-grade JavaFX application for courier and logistics management with plugin architecture and real-time shipment tracking.</p>
+          <a href="https://github.com/Labpro-21/if2010-tubes-2-2425-kkp/archive/refs/heads/main.zip" target="_blank" class="project-link">
+            Download
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-idx">03 / Web App</div>
+          <div class="project-name">Little Alchemy Solver</div>
+          <div class="project-tag">Algorithms</div>
+          <p class="project-desc">Recipe search application for the Little Alchemy game using BFS, DFS, and BDS pathfinding algorithms.</p>
+          <a href="https://tubes2-jumbo-uncut.vercel.app/" target="_blank" class="project-link">
+            Visit Live
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-idx">04 / Game</div>
+          <div class="project-name">Purry Leveling</div>
+          <div class="project-tag dl">C++</div>
+          <p class="project-desc">Turn-based RPG with a dungeon system where players choose classes, battle monsters, collect items, and develop skills.</p>
+          <a href="https://github.com/tkanigara/PurryLeveling/archive/refs/heads/main.zip" target="_blank" class="project-link">
+            Download
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-idx">05 / Tool</div>
+          <div class="project-name">CV ATS</div>
+          <div class="project-tag">Python · MySQL</div>
+          <p class="project-desc">Python application using KMP and Boyer-Moore string matching for resume screening, with MySQL, encryption, and GUI.</p>
+          <a href="https://github.com/tkanigara/CV_ATS/archive/refs/heads/main.zip" target="_blank" class="project-link">
+            Download
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-idx">06 / System</div>
+          <div class="project-name">Luma_OSJang</div>
+          <div class="project-tag dl">OS / Kernel</div>
+          <p class="project-desc">Operating system built from scratch featuring a custom kernel, filesystem, process & memory management, and shell on QEMU.</p>
+          <a href="https://github.com/tkanigara/Luma_OSjang/archive/refs/heads/indah8.zip" target="_blank" class="project-link">
+            Download
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-num">04</div>
+        <div class="section-title-group">
+          <div class="section-eyebrow">Achievements</div>
+          <h2 class="section-title">Leadership &<br>Milestones</h2>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2025</div>
+          <h3 class="timeline-role">Director of Event — INFEST KSEP ITB</h3>
+          <p class="timeline-desc">Leading the planning and execution of a major festival on economics and capital markets featuring seminars, talkshows, interactive booths, games, and supporting activities.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2024</div>
+          <h3 class="timeline-role">Deputy Head of Event Division — SPARTA HMIF</h3>
+          <p class="timeline-desc">Designing, coordinating, and overseeing the entire orientation program for new HMIF ITB members to ensure a smooth, engaging, and impactful experience.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2024</div>
+          <h3 class="timeline-role">Deputy Head of Event Division — KSEP ITB</h3>
+          <p class="timeline-desc">Designed event rundown, technical concepts, MC guides, and participant games for the organization's major events.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner contact-inner">
+      <h2 class="contact-heading reveal">Let's <em>Work</em><br>Together</h2>
+      <p class="contact-sub reveal">Open for collaborations, internships, and interesting projects.</p>
+      <div class="contact-links reveal">
+        <a href="mailto:timurkanigara@example.com" class="contact-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+          Email
+        </a>
+        <a href="https://www.linkedin.com/in/timurkanigara/" target="_blank" class="contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v7M7 7v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v-3.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5V17M11 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/tkanigara" target="_blank" class="contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.instagram.com/tkanigara" target="_blank" class="contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 Timur Kanigara. All rights reserved.</p>
+    <div class="footer-logo">T.K</div>
+    <div class="footer-copy">© 2025 Muhammad Timur Kanigara — All Rights Reserved</div>
   </footer>
+
+  <script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursorFollower');
+    let mx = 0, my = 0, fx = 0, fy = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    function animateFollower() {
+      fx += (mx - fx) * 0.1;
+      fy += (my - fy) * 0.1;
+      follower.style.left = fx + 'px';
+      follower.style.top = fy + 'px';
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+        follower.style.transform = 'translate(-50%,-50%) scale(1.5)';
+        follower.style.opacity = '0.8';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        follower.style.transform = 'translate(-50%,-50%) scale(1)';
+        follower.style.opacity = '0.5';
+      });
+    });
+
+    // INTERSECTION OBSERVER
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.getAttribute('data-delay') || 0;
+          setTimeout(() => {
+            el.classList.add('visible');
+            // Animate skill bars
+            const fill = el.querySelector('.skill-fill');
+            if (fill) fill.classList.add('animated');
+          }, parseInt(delay));
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.style.color = link.getAttribute('href') === '#' + entry.target.id ? 'var(--accent)' : '';
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
 </body>
 </html>
