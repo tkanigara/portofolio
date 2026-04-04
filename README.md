@@ -1,18 +1,30 @@
-﻿# portofolio
+﻿# Timur Kanigara — Personal Portfolio
 
+Portofolio pribadi yang dibuat untuk menampilkan profil, pengalaman, desain web, dan proyek-proyek yang telah dikerjakan.
 
-Project ini merupakan portofolio yang dibuat untuk memenuhi tugas SPARTA HMIF ITB 2023. 
-Portofolio ini mengandung nama, foto diri, deskripsi diri, minat dan bakat, project yang pernah dikerjakan, pencapaian yang telah didapat, serta kontak diri.
+## Fitur Utama
+- **Desain Minimalis:** Antarmuka yang bersih dan mudah dibaca.
+- **Responsif:** Tampilan menyesuaikan otomatis di perangkat desktop maupun *mobile*.
+- **Performa Cepat:** Menggunakan kursor *native* CSS (*hardware accelerated*) sehingga bebas *delay*/*lag*, berbeda dari custom kursor JS pada umumnya.
+- **Animasi Halus:** Dilengkapi interaksi *scroll reveal* dan efek *typing* yang sangat minim memakan *resource*.
 
-Saya menggunakan html, css serta javascript dalam pembuatan project portofolio ini.
+## Teknologi
+Proyek ini dikembangkan secara murni menggunakan web standar:
+- HTML5
+- CSS3 (Vanilla)
+- JavaScript (Vanilla, hanya untuk logika animasi dasar)
 
-cara menjalankan program ini adalah dengan mendownload semua file yang ada lalu membuka file index.html
+## Cara Menjalankan
+Sangat praktis untuk dicoba secara lokal:
+1. Download atau pastikan semua file sudah ada di komputermu.
+2. Cukup klik ganda (buka) file `index.html` menggunakan browser apapun (Chrome, Firefox, Safari, Edge).
+3. Selesai! Tidak perlu *install dependencies* atau menjalankan server *backend*.
 
-Bonus yang saya kerjakan adalah dengan deploy melalui vercell.
-link deploy yaitu https://portofolio-iota-blue.vercel.app/.
+## Live (Deployment)
+Website ini dirancang agar siap *deploy* secara instan. Berikut tautan aktif:
+👉 [https://timurkanigara.my.id](https://timurkanigara.my.id)
 
-Kesulitan yang saya hadapi adalah waktu yang saya miliki menurut saya tidak begitu banyak, termasuk juga dengan manajemen waktu saya yang mungkin bisa dinilai kurang baik. sehingga saya baru bisa mengerjakan project ini tidak lama sebelum batas akhir pengumpulan.
-
-Identitas:
-Nama : Muhamamd Timur Kanigara
-NIM TPB : 19623038
+## Profil Author
+- **Nama:** Muhammad Timur Kanigara
+- **Studi:** Teknik Informatika ITB
+- **GitHub:** [@tkanigara](https://github.com/tkanigara)

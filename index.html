@@ -4,6 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timur Kanigara — Portfolio</title>
+  <!-- ===================== SEO ===================== -->
+  <meta name="description" content="Muhammad Timur Kanigara — Informatics Engineering student at ITB. Passionate about web development, software engineering, and building impactful projects.">
+  <meta name="keywords" content="Timur Kanigara, Muhammad Timur Kanigara, ITB, Informatika, portfolio, web developer, software engineer, Bandung">
+  <meta name="author" content="Muhammad Timur Kanigara">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://timurkanigara.my.id">
+
+  <!-- ===================== OPEN GRAPH (WhatsApp, LinkedIn, Facebook) ===================== -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://timurkanigara.my.id">
+  <meta property="og:title"       content="Timur Kanigara — Informatics Engineering Student & Developer">
+  <meta property="og:description" content="3rd-year ITB student passionate about software engineering and web development. Check out my projects and achievements.">
+  <meta property="og:image"       content="https://timurkanigara.my.id/photo.jpg">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale"      content="en_US">
+  <meta property="og:site_name"   content="Timur Kanigara Portfolio">
+
+  <!-- ===================== TWITTER CARD ===================== -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Timur Kanigara — Informatics Engineering Student & Developer">
+  <meta name="twitter:description" content="3rd-year ITB student passionate about software engineering and web development.">
+  <meta name="twitter:image"       content="https://timurkanigara.my.id/photo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -28,30 +51,14 @@
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* ===================== CURSOR ===================== */
-    .cursor {
-      width: 10px; height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.15s ease;
+    /* ===================== NATIVE CUSTOM CURSOR ===================== */
+    body {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='4' fill='%23e8c97e'/%3E%3C/svg%3E") 16 16, auto;
     }
-    .cursor-follower {
-      width: 36px; height: 36px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      opacity: 0.5;
-      transition: opacity 0.3s, transform 0.3s;
+    a, button, .btn {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' stroke='%23e8c97e' stroke-width='1.5' fill='rgba(232, 201, 126, 0.1)'/%3E%3C/svg%3E") 16 16, pointer !important;
     }
 
     /* ===================== NOISE OVERLAY ===================== */
@@ -96,7 +103,6 @@
       text-decoration: none;
       color: var(--muted);
       transition: color 0.3s;
-      cursor: none;
     }
     .nav-links a:hover,
     .nav-links a.active { color: var(--accent); }
@@ -186,7 +192,6 @@
       padding: 0.8rem 1.8rem;
       border-radius: 2px;
       transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s, color 0.3s, background 0.3s;
-      cursor: none;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -497,7 +502,6 @@
       text-decoration: none;
       color: var(--accent);
       transition: gap 0.2s;
-      cursor: none;
     }
     .project-link:hover { gap: 0.75rem; }
 
@@ -571,7 +575,6 @@
       padding: 0.85rem 1.8rem;
       border-radius: 2px;
       transition: border-color 0.3s, color 0.3s, background 0.3s;
-      cursor: none;
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
@@ -613,10 +616,6 @@
   </style>
 </head>
 <body>
-
-  <!-- CURSOR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
 
   <!-- NAV -->
   <nav>
@@ -945,42 +944,10 @@
   <!-- ==================== FOOTER ==================== -->
   <footer>
     <div class="footer-logo">T.K</div>
-    <div class="footer-copy">© 2025 Muhammad Timur Kanigara — All Rights Reserved</div>
+    <div class="footer-copy">© 2026 Muhammad Timur Kanigara — All Rights Reserved</div>
   </footer>
 
   <script>
-    /* ==================== CURSOR ==================== */
-    const cursor   = document.getElementById('cursor');
-    const follower = document.getElementById('cursorFollower');
-    let mx = 0, my = 0, fx = 0, fy = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top  = my + 'px';
-    });
-
-    (function followLoop() {
-      fx += (mx - fx) * 0.1;
-      fy += (my - fy) * 0.1;
-      follower.style.left = fx + 'px';
-      follower.style.top  = fy + 'px';
-      requestAnimationFrame(followLoop);
-    })();
-
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform   = 'translate(-50%,-50%) scale(2.2)';
-        follower.style.opacity   = '0.85';
-        follower.style.transform = 'translate(-50%,-50%) scale(1.6)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform   = 'translate(-50%,-50%) scale(1)';
-        follower.style.opacity   = '0.5';
-        follower.style.transform = 'translate(-50%,-50%) scale(1)';
-      });
-    });
-
     /* ==================== TYPING ==================== */
     const typingEl = document.getElementById('typingEl');
     const phrases  = ['build web apps.', 'write clean code.', 'solve hard problems.', 'learn new things.', 'design systems.'];
