@@ -5,6 +5,8 @@ const seen = new WeakSet<Element>();
 const traces = new WeakMap<HTMLElement, Animation[]>();
 const canAnimate = typeof Element.prototype.animate === "function";
 let observer: IntersectionObserver | undefined;
+const root = document.documentElement;
+const motionEnabled = () => root.dataset.motion === "on";
 
 function animate(
   element: Element,
@@ -20,14 +22,11 @@ function animate(
 }
 
 function observeSections() {
-  if (
-    !canAnimate ||
-    reducedMotion.matches ||
-    !("IntersectionObserver" in window)
-  )
+  if (!canAnimate || !motionEnabled() || !("IntersectionObserver" in window))
     return;
   observer = new IntersectionObserver(
     (entries) => {
+      if (!motionEnabled()) return;
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
         observer?.unobserve(entry.target);
@@ -37,8 +36,14 @@ function observeSections() {
           animate(
             entry.target,
             [
-              { opacity: 0.45, transform: "translateY(12px)" },
-              { opacity: 1, transform: "translateY(0)" },
+              {
+                opacity: 0.45,
+                transform: reducedMotion.matches ? "none" : "translateY(12px)",
+              },
+              {
+                opacity: 1,
+                transform: reducedMotion.matches ? "none" : "translateY(0)",
+              },
             ],
             { duration: 360, easing: "cubic-bezier(.2,.7,.2,1)" },
           );
@@ -52,7 +57,7 @@ function observeSections() {
 }
 
 function trace(diagram: HTMLElement) {
-  if (!canAnimate || reducedMotion.matches) return;
+  if (!canAnimate || !motionEnabled()) return;
   traces.get(diagram)?.forEach((animation) => animation.cancel());
   const style = getComputedStyle(diagram);
   const accent = style.getPropertyValue("--accent").trim();
@@ -119,33 +124,65 @@ function trace(diagram: HTMLElement) {
 }
 
 const diagrams = document.querySelectorAll<HTMLElement>("[data-diagram]");
-function updateMotionPreference() {
+function updateMotionPreference(cancelActive = false) {
+  root.dataset.motion = "on";
   observer?.disconnect();
-  if (reducedMotion.matches) active.forEach((animation) => animation.cancel());
-  else observeSections();
+  if (cancelActive) {
+    active.forEach((animation) => animation.cancel());
+    document.documentElement.classList.remove("intro-pending");
+  }
+  observeSections();
   diagrams.forEach((diagram) => {
     const button = diagram.querySelector<HTMLButtonElement>(".diagram-play");
-    if (button) button.hidden = reducedMotion.matches || !canAnimate;
+    if (button) button.hidden = !motionEnabled() || !canAnimate;
   });
 }
 
-if (canAnimate && !reducedMotion.matches && !location.hash) {
-  document.querySelectorAll("[data-intro]").forEach((element, index) => {
+async function introduceHero() {
+  const root = document.documentElement;
+  const elements = document.querySelectorAll("[data-intro]");
+  if (!canAnimate || !motionEnabled() || location.hash || !elements.length) {
+    root.classList.remove("intro-pending");
+    return;
+  }
+  // Font loading can otherwise consume the whole entrance before its first visible frame.
+  await Promise.race([
+    document.fonts.ready,
+    new Promise((resolve) => setTimeout(resolve, 250)),
+  ]);
+  await new Promise(requestAnimationFrame);
+  if (
+    !motionEnabled() ||
+    document.visibilityState === "hidden" ||
+    !root.classList.contains("intro-pending")
+  ) {
+    root.classList.remove("intro-pending");
+    return;
+  }
+  elements.forEach((element, index) => {
     animate(
       element,
       [
-        { opacity: 0.3, transform: "translateY(10px)" },
-        { opacity: 1, transform: "translateY(0)" },
+        {
+          opacity: 0,
+          transform: reducedMotion.matches ? "none" : "translateY(22px)",
+        },
+        {
+          opacity: 1,
+          transform: reducedMotion.matches ? "none" : "translateY(0)",
+        },
       ],
       {
-        duration: 400,
-        delay: Math.min(index * 40, 100),
+        duration: 520,
+        delay: index * 170,
         easing: "cubic-bezier(.2,.7,.2,1)",
         fill: "backwards",
       },
     );
   });
+  root.classList.remove("intro-pending");
 }
+void introduceHero();
 diagrams.forEach((diagram) => {
   diagram
     .querySelector(".diagram-play")
@@ -155,4 +192,4 @@ diagrams.forEach((diagram) => {
   });
 });
 updateMotionPreference();
-reducedMotion.addEventListener("change", updateMotionPreference);
+reducedMotion.addEventListener("change", () => updateMotionPreference(true));

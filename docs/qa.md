@@ -129,3 +129,19 @@ An existing development server occupied port 4321. Final acceptance used the ind
 Post-motion Lighthouse mobile on the production preview: **Performance 98, Accessibility 100, Best Practices 100, SEO 100**; LCP approximately **2.19s**, CLS **0**, console audit passed. Raw report: `.local-backup/qa/lighthouse-motion.json`. The short actual browser recording is `.local-backup/qa/motion/preview.webm`.
 
 Anti-slop review remains 1/10 and distinctiveness 8/10 (subjective rubric): motion reinforces entrance hierarchy and explains the two diagrams; it is finite, selective, keyboard-operable and reduced-motion safe. Source scan remains 0/10 heuristic risk.
+
+### Clearer hero entrance after owner feedback
+
+The first entrance was too compressed to be perceptible (400ms with only 40ms spacing, capped at 100ms). It now uses 520ms per element with 170ms spacing and 22px travel: title → description → actions → portrait. A bounded 250ms font-ready wait keeps the effect from completing during font loading. The early pending state prevents visible content fading back out; an independent 1.4s failsafe restores static visibility if the enhancement module fails. Reduced-motion and no-JavaScript remain immediate/static.
+
+All **20 browser tests pass** (approximately 1.4 minutes), including a new visual-order regression: at animation time 300ms the title is ahead of the description while actions and portrait remain at zero opacity. At 700ms later elements are entering. Paused actual-browser frames and a real-time recording are in `.local-backup/qa/hero-stagger/` (`300ms.png`, `700ms.png`, `hero-entrance.webm`). The four widths and both themes, keyboard traces, reduced-motion cancellation and existing route/PDF checks pass. Lint, typecheck and production build pass; static verification now reports 249 local references (the larger module is emitted as a local script asset).
+
+The owner's uncommitted MAI date edit in `src/pages/index.astro` was preserved and is not included in the motion correction commit.
+
+Clearer-hero production Lighthouse: **99 / 100 / 100 / 100** (Performance / Accessibility / Best Practices / SEO), LCP approximately 2.1s and CLS 0. Report: `.local-backup/qa/lighthouse-clearer-hero.json`.
+
+### Automatic motion without a toggle
+
+The owner's localhost browser reported `prefers-reduced-motion: reduce`, which explained why the earlier enhancement appeared static. Following explicit owner feedback, motion now starts automatically with no on/off control or stored override. Reduced-motion uses staggered opacity-only entrances and reveals; positional movement, smooth scrolling and CSS menu animation remain disabled. A stale `motion=off` storage value is ignored. No operating-system setting was changed.
+
+All **21 browser tests pass**, including automatic entrance under reduced motion, absence of a toggle, no transform in reduced-motion keyframes, the existing four-width/two-theme route checks and keyboard traces. Native verification of the final localhost UI could not finish because the computer-use tool could not determine the active browser URL; automated Chrome checks completed successfully. The final test keyframe inspection uses a `KeyframeEffect` guard for TypeScript safety.

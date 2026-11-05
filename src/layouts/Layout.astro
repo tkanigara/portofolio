@@ -38,6 +38,18 @@ const path = Astro.url.pathname;
               : "light";
         document.documentElement.dataset.theme = theme;
         document.documentElement.classList.add("js");
+        document.documentElement.dataset.motion = "on";
+        if (
+          document.documentElement.dataset.motion === "on" &&
+          !location.hash
+        ) {
+          document.documentElement.classList.add("intro-pending");
+          // Restore readable content even if the enhancement module cannot load.
+          setTimeout(
+            () => document.documentElement.classList.remove("intro-pending"),
+            1400,
+          );
+        }
       })();
     </script>
     <title>{title} — Timur Kanigara</title>

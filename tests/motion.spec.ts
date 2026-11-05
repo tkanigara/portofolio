@@ -4,6 +4,97 @@ import { mkdir } from "node:fs/promises";
 
 const previewURL = process.env.PORTFOLIO_PREVIEW_URL || "http://127.0.0.1:4321";
 
+test("Motion starts automatically without a toggle, using fades for reduced motion", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.addInitScript(() => localStorage.setItem("motion", "off"));
+  await page.goto("/", { waitUntil: "load" });
+  await expect(page.locator(".motion-toggle")).toHaveCount(0);
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+  await expect
+    .poll(() =>
+      page
+        .locator("[data-intro]")
+        .evaluateAll(
+          (elements) =>
+            elements.flatMap((element) => element.getAnimations()).length,
+        ),
+    )
+    .toBe(4);
+  const transforms = await page
+    .locator("[data-intro]")
+    .evaluateAll((elements) =>
+      elements.flatMap((element) =>
+        element
+          .getAnimations()
+          .flatMap((animation) =>
+            animation.effect instanceof KeyframeEffect
+              ? animation.effect.getKeyframes().map((frame) => frame.transform)
+              : [],
+          ),
+      ),
+    );
+  expect(transforms.length).toBeGreaterThan(0);
+  expect(transforms.every((transform) => transform === "none")).toBe(true);
+  await expect
+    .poll(() => page.evaluate(() => document.getAnimations().length))
+    .toBe(0);
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+  expect(
+    await page.evaluate(
+      () => matchMedia("(prefers-reduced-motion: reduce)").matches,
+    ),
+  ).toBe(true);
+  await expect
+    .poll(() => page.evaluate(() => document.getAnimations().length))
+    .toBe(0);
+  await expect(page.locator(".diagram-play:visible")).toHaveCount(2);
+});
+
+test("Hero visibly separates title, description, actions and portrait", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/", { waitUntil: "load" });
+  await expect
+    .poll(() =>
+      page
+        .locator("[data-intro]")
+        .evaluateAll(
+          (elements) =>
+            elements.flatMap((element) => element.getAnimations()).length,
+        ),
+    )
+    .toBe(4);
+  const stages = await page.locator("[data-intro]").evaluateAll((elements) =>
+    elements.map((element) => {
+      const animation = element.getAnimations()[0];
+      animation.pause();
+      animation.currentTime = 300;
+      return Number(getComputedStyle(element).opacity);
+    }),
+  );
+  expect(stages[0]).toBeGreaterThan(stages[1]);
+  expect(stages[1]).toBeGreaterThan(stages[2]);
+  expect(stages[2]).toBe(0);
+  expect(stages[3]).toBe(0);
+  await mkdir(".local-backup/qa/hero-stagger", { recursive: true });
+  await page.screenshot({ path: ".local-backup/qa/hero-stagger/300ms.png" });
+  await page.locator("[data-intro]").evaluateAll((elements) =>
+    elements.forEach((element) => {
+      element.getAnimations()[0].currentTime = 700;
+    }),
+  );
+  await page.screenshot({ path: ".local-backup/qa/hero-stagger/700ms.png" });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect
+    .poll(() => page.evaluate(() => document.getAnimations().length))
+    .toBe(0);
+  await expect(page.locator(".portrait")).toHaveCSS("opacity", "1");
+});
+
 for (const theme of ["light", "dark"] as const) {
   for (const width of [375, 768, 1280, 1440]) {
     test(`Motion at ${width}px ${theme} stays readable and accessible`, async ({
@@ -87,7 +178,7 @@ for (const theme of ["light", "dark"] as const) {
   }
 }
 
-test("Reveals run once; reduced-motion cancels traces and leaves content visible", async ({
+test("Reveals run once; preference changes cancel active effects and retain content", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
@@ -122,13 +213,15 @@ test("Reveals run once; reduced-motion cancels traces and leaves content visible
     )
     .toBeGreaterThan(0);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(button).toBeHidden();
+  await expect(button).toBeVisible();
   await expect
     .poll(() => page.evaluate(() => document.getAnimations().length))
     .toBe(0);
   await expect(page.locator("h1")).toHaveCSS("opacity", "1");
   await expect(experience).toHaveCSS("opacity", "1");
   await page.reload();
-  await expect(page.locator(".diagram-play:visible")).toHaveCount(0);
-  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+  await expect(page.locator(".diagram-play:visible")).toHaveCount(2);
+  await expect
+    .poll(() => page.evaluate(() => document.getAnimations().length))
+    .toBe(0);
 });

@@ -2411,7 +2411,10 @@ figcaption {
     font-size: 15px;
   }
 }
-@media (prefers-reduced-motion: no-preference) {
+:root[data-motion="on"] {
+  &.intro-pending [data-intro] {
+    opacity: 0;
+  }
   .button,
   .theme-toggle,
   .filters button {
@@ -2441,7 +2444,7 @@ figcaption {
     rotate: 45deg;
   }
   @media (max-width: 800px) {
-    .js .header-inner nav.is-open {
+    &.js .header-inner nav.is-open {
       animation: menu-enter 180ms ease-out;
     }
   }
