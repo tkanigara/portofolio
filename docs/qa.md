@@ -139,3 +139,9 @@ All **20 browser tests pass** (approximately 1.4 minutes), including a new visua
 The owner's uncommitted MAI date edit in `src/pages/index.astro` was preserved and is not included in the motion correction commit.
 
 Clearer-hero production Lighthouse: **99 / 100 / 100 / 100** (Performance / Accessibility / Best Practices / SEO), LCP approximately 2.1s and CLS 0. Report: `.local-backup/qa/lighthouse-clearer-hero.json`.
+
+### Automatic motion without a toggle
+
+The owner's localhost browser reported `prefers-reduced-motion: reduce`, which explained why the earlier enhancement appeared static. Following explicit owner feedback, motion now starts automatically with no on/off control or stored override. Reduced-motion uses staggered opacity-only entrances and reveals; positional movement, smooth scrolling and CSS menu animation remain disabled. A stale `motion=off` storage value is ignored. No operating-system setting was changed.
+
+All **21 browser tests pass**, including automatic entrance under reduced motion, absence of a toggle, no transform in reduced-motion keyframes, the existing four-width/two-theme route checks and keyboard traces. Native verification of the final localhost UI could not finish because the computer-use tool could not determine the active browser URL; automated Chrome checks completed successfully. The final test keyframe inspection uses a `KeyframeEffect` guard for TypeScript safety.

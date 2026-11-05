@@ -40,7 +40,7 @@ npm.cmd run dev
 - `404.html`, `/robots.txt`, `/sitemap.xml`: error page dan SEO; sitemap sembilan URL canonical.
 - Light/dark mengikuti OS saat kunjungan pertama; pilihan eksplisit disimpan. Skrip head mencegah flash tema.
 - Menu mobile dengan state ARIA, Escape dan fokus kembali; skip link, fokus terlihat, reduced-motion, semantic landmarks, image alt.
-- Animasi ringan: hero bertahap, empat reveal sekali tampil pada Work/Experience, feedback panah/menu, serta trace workflow MAI dan forward/backward FFNN. Tombol trace dapat dipakai dengan keyboard; hover aktif pada pointer presisi. Tanpa loop atau dependency tambahan. Reduced-motion menampilkan versi statis dan membatalkan efek yang sedang berjalan.
+- Animasi otomatis: hero bertahap, empat reveal sekali tampil pada Work/Experience, feedback panah/menu, serta trace workflow MAI dan forward/backward FFNN. Tidak ada tombol Motion on/off. Reduced-motion memakai fade tanpa pergeseran posisi; scroll/menu tetap tanpa gerakan. Tombol trace dapat dipakai dengan keyboard; hover aktif pada pointer presisi. Tanpa loop atau dependency tambahan.
 - Metadata unik, canonical, OG/Twitter 1200×630, Person JSON-LD yang faktual.
 
 ## Desain dan pemeliharaan

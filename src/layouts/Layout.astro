@@ -38,8 +38,9 @@ const path = Astro.url.pathname;
               : "light";
         document.documentElement.dataset.theme = theme;
         document.documentElement.classList.add("js");
+        document.documentElement.dataset.motion = "on";
         if (
-          !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+          document.documentElement.dataset.motion === "on" &&
           !location.hash
         ) {
           document.documentElement.classList.add("intro-pending");
