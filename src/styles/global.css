@@ -2412,6 +2412,9 @@ figcaption {
   }
 }
 @media (prefers-reduced-motion: no-preference) {
+  .intro-pending [data-intro] {
+    opacity: 0;
+  }
   .button,
   .theme-toggle,
   .filters button {

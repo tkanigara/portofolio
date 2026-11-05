@@ -28,6 +28,7 @@ function observeSections() {
     return;
   observer = new IntersectionObserver(
     (entries) => {
+      if (reducedMotion.matches) return;
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
         observer?.unobserve(entry.target);
@@ -121,31 +122,60 @@ function trace(diagram: HTMLElement) {
 const diagrams = document.querySelectorAll<HTMLElement>("[data-diagram]");
 function updateMotionPreference() {
   observer?.disconnect();
-  if (reducedMotion.matches) active.forEach((animation) => animation.cancel());
-  else observeSections();
+  if (reducedMotion.matches) {
+    active.forEach((animation) => animation.cancel());
+    document.documentElement.classList.remove("intro-pending");
+  } else observeSections();
   diagrams.forEach((diagram) => {
     const button = diagram.querySelector<HTMLButtonElement>(".diagram-play");
     if (button) button.hidden = reducedMotion.matches || !canAnimate;
   });
 }
 
-if (canAnimate && !reducedMotion.matches && !location.hash) {
-  document.querySelectorAll("[data-intro]").forEach((element, index) => {
+async function introduceHero() {
+  const root = document.documentElement;
+  const elements = document.querySelectorAll("[data-intro]");
+  if (
+    !canAnimate ||
+    reducedMotion.matches ||
+    location.hash ||
+    !elements.length
+  ) {
+    root.classList.remove("intro-pending");
+    return;
+  }
+  // Font loading can otherwise consume the whole entrance before its first visible frame.
+  await Promise.race([
+    document.fonts.ready,
+    new Promise((resolve) => setTimeout(resolve, 250)),
+  ]);
+  await new Promise(requestAnimationFrame);
+  if (
+    reducedMotion.matches ||
+    document.visibilityState === "hidden" ||
+    !root.classList.contains("intro-pending")
+  ) {
+    root.classList.remove("intro-pending");
+    return;
+  }
+  elements.forEach((element, index) => {
     animate(
       element,
       [
-        { opacity: 0.3, transform: "translateY(10px)" },
+        { opacity: 0, transform: "translateY(22px)" },
         { opacity: 1, transform: "translateY(0)" },
       ],
       {
-        duration: 400,
-        delay: Math.min(index * 40, 100),
+        duration: 520,
+        delay: index * 170,
         easing: "cubic-bezier(.2,.7,.2,1)",
         fill: "backwards",
       },
     );
   });
+  root.classList.remove("intro-pending");
 }
+void introduceHero();
 diagrams.forEach((diagram) => {
   diagram
     .querySelector(".diagram-play")
