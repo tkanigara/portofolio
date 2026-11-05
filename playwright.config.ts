@@ -8,7 +8,7 @@ export default defineConfig({
     ["json", { outputFile: ".local-backup/qa/playwright-results.json" }],
   ],
   use: {
-    baseURL: "http://127.0.0.1:4321",
+    baseURL: process.env.PORTFOLIO_PREVIEW_URL || "http://127.0.0.1:4321",
     browserName: "chromium",
     channel: "chrome",
     headless: true,

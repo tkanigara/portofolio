@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { mkdir } from "node:fs/promises";
 
+const previewURL = process.env.PORTFOLIO_PREVIEW_URL || "http://127.0.0.1:4321";
+
 const routes = [
   "/",
   "/projects/",
@@ -32,7 +34,7 @@ for (const theme of ["light", "dark"] as const) {
       });
       await mkdir(".local-backup/qa/screenshots", { recursive: true });
       for (const route of routes) {
-        const response = await page.goto(`http://127.0.0.1:4321${route}`, {
+        const response = await page.goto(`${previewURL}${route}`, {
           waitUntil: "networkidle",
         });
         expect(response?.status()).toBe(200);
@@ -167,7 +169,7 @@ test("Progressive enhancement without JavaScript; system theme follows preferenc
     colorScheme: "dark",
   });
   const page = await context.newPage();
-  await page.goto("http://127.0.0.1:4321/projects/");
+  await page.goto(`${previewURL}/projects/`);
   await expect(page.locator(".project-entry")).toHaveCount(6);
   await expect(page.locator("#main-navigation")).toBeVisible();
   expect(
@@ -178,7 +180,7 @@ test("Progressive enhancement without JavaScript; system theme follows preferenc
   await context.close();
   const auto = await browser.newContext({ colorScheme: "light" });
   const autoPage = await auto.newPage();
-  await autoPage.goto("http://127.0.0.1:4321/");
+  await autoPage.goto(previewURL);
   await autoPage.emulateMedia({ colorScheme: "dark" });
   await expect(autoPage.locator("html")).toHaveAttribute("data-theme", "dark");
   await auto.close();
