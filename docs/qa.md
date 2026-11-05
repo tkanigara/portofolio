@@ -7,11 +7,11 @@ Static Astro build: **10 HTML pages**, nine indexable URLs, robots and generated
 | Check | Result |
 |---|---|
 | `npm run lint` | PASS — Prettier across source, scripts, tests and config |
-| `npm run check` | PASS — 21 files, 0 errors, 0 warnings, 0 hints |
+| `npm run check` | PASS — 23 files, 0 errors, 0 warnings, 0 hints |
 | `npm run build` | PASS — static output, approximately 1.2 MB including PDFs, responsive derivatives and social image |
 | `npm test` | PASS — 10 HTML routes, 239 local references, 9 image occurrences, unique titles/descriptions/canonicals, anchor IDs, sitemap/robots |
 | Resume integrity | PASS — all 3 public PDFs have identical SHA-256 to source PDFs |
-| `npm run test:browser` | PASS — 10 tests, 0 skipped/flaky/failures, approximately 2.1 minutes |
+| `npm run test:browser` | PASS — 19 tests including motion follow-up, 0 skipped/flaky/failures, approximately 2.2 minutes |
 | Dependency security | PASS — `npm audit`: 0 vulnerabilities including dev dependencies |
 | anti-ai-slop source and built HTML scan | 0.0/10 heuristic risk; reviewed manually as described below |
 
@@ -72,7 +72,7 @@ Measured against the production build served by `astro preview`, using Lighthous
 | Resume | **99** | **100** | **100** | **100** |
 | Nimonspedia case study | **98** | **100** | **100** | **100** |
 
-Final home LCP: approximately **2.11s**, CLS **0**. Main optimizations: static HTML, no framework hydration, approximately 2 KB of application interaction code, self-hosted fonts, small WebP portrait, responsive screenshots, eager hero portrait and lazy below-fold media. Some font/CSS request chains and image-delivery suggestions remain; the primary scores exceed the requested target. No numerical project benchmark was inferred from these site measurements.
+Initial rebuild home LCP: approximately **2.11s**, CLS **0**. Main optimizations: static HTML, no framework hydration, small native application scripts, self-hosted fonts, small WebP portrait, responsive screenshots, eager hero portrait and lazy below-fold media. Some font/CSS request chains and image-delivery suggestions remain; the primary scores exceed the requested target. No numerical project benchmark was inferred from these site measurements. The post-motion measurement is recorded below.
 
 Reproduction (after starting `npm run preview`; Chrome path may vary):
 
@@ -90,7 +90,7 @@ Diagnosis: a restrained engineer’s portfolio with genuine evidence and a consi
 | Layout defaultness | 1 | Familiar portfolio split, varied and purposefully paced project composition |
 | Component defaultness | 0 | Custom editorial rows and case studies; no UI kit defaults |
 | Typography genericness | 0 | Intentional sans/italic serif/mono roles and responsive hierarchy |
-| Decorative noise | 0 | No reveal, glows, gradients, cursor, counters, or gratuitous hover motion |
+| Decorative noise | 0 | Four selective reveals and finite explanatory traces; no glows, gradients, cursor, counters, or excessive motion |
 | **AI Slop Score** | **1 / 10** | Subjective rubric assessment |
 
 | Distinctiveness category | Score / 2 |
@@ -115,3 +115,17 @@ Implementation Readiness before UI: **10/10** — audience/action, constrained d
 - No Safari/Firefox runs, full screen-reader session, remote deployment test, or hosted field-performance data. Reduced-motion and no-JavaScript behavior were tested in Chrome.
 
 These limits do not block the completed local static website. Further publication and production-domain changes remain separate owner-controlled steps.
+
+## Motion follow-up
+
+Owner approved a restrained animation pass. Native Web Animations adds four hero elements (400ms, 10px, short stagger), four one-time Work/Experience reveals (360ms, 12px), and finite MAI / FFNN traces. MAI follows its five conceptual stages; FFNN highlights forward connections then reverses for backpropagation. CTA arrows and the mobile menu respond in 160–180ms. No added dependency, perpetual animation, image zoom, or motion on every project card.
+
+Diagram replay is available through keyboard buttons and fine-pointer hover. Reduced-motion skips these effects, cancels active animations when the preference changes, hides trace-only controls, and retains the full static diagrams. Content is never hidden by reveal CSS; no-JavaScript navigation/content checks still pass. Native interaction scripts total approximately 4.2 KB uncompressed on home.
+
+Validation: 19 Playwright tests pass, including eight normal-motion viewport/theme contexts, keyboard replay, one-time reveal behavior, and dynamic reduced-motion cancellation. Eight additional axe scans with WCAG 2.1 A/AA tags report no violations. Existing reduced-motion route/PDF/menu/filter tests also pass. Actual screenshots include the four widths in both themes, hero entrance and diagram frames; visual review found no overflow or obscured content. Evidence and a short WebM capture are in `.local-backup/qa/motion/`.
+
+An existing development server occupied port 4321. Final acceptance used the independently started production preview on 4322 with `PORTFOLIO_PREVIEW_URL`, leaving the development server untouched. Preview URL can now be overridden in the test config. The initial development-server measurement was discarded and replaced with a production-preview measurement after test workers finished.
+
+Post-motion Lighthouse mobile on the production preview: **Performance 98, Accessibility 100, Best Practices 100, SEO 100**; LCP approximately **2.19s**, CLS **0**, console audit passed. Raw report: `.local-backup/qa/lighthouse-motion.json`. The short actual browser recording is `.local-backup/qa/motion/preview.webm`.
+
+Anti-slop review remains 1/10 and distinctiveness 8/10 (subjective rubric): motion reinforces entrance hierarchy and explains the two diagrams; it is finite, selective, keyboard-operable and reduced-motion safe. Source scan remains 0/10 heuristic risk.

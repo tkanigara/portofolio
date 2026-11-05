@@ -40,6 +40,7 @@ npm.cmd run dev
 - `404.html`, `/robots.txt`, `/sitemap.xml`: error page dan SEO; sitemap sembilan URL canonical.
 - Light/dark mengikuti OS saat kunjungan pertama; pilihan eksplisit disimpan. Skrip head mencegah flash tema.
 - Menu mobile dengan state ARIA, Escape dan fokus kembali; skip link, fokus terlihat, reduced-motion, semantic landmarks, image alt.
+- Animasi ringan: hero bertahap, empat reveal sekali tampil pada Work/Experience, feedback panah/menu, serta trace workflow MAI dan forward/backward FFNN. Tombol trace dapat dipakai dengan keyboard; hover aktif pada pointer presisi. Tanpa loop atau dependency tambahan. Reduced-motion menampilkan versi statis dan membatalkan efek yang sedang berjalan.
 - Metadata unik, canonical, OG/Twitter 1200×630, Person JSON-LD yang faktual.
 
 ## Desain dan pemeliharaan
@@ -103,6 +104,8 @@ npm run test:browser
 ```
 
 Suite memakai Google Chrome lokal. Jika tidak tersedia, instal browser Playwright dan sesuaikan `channel` di `playwright.config.ts`. Suite menguji 375/768/1280/1440px, dua tema, sepuluh route, gambar, overflow, console, axe, tema, menu keyboard, filter, PDF, dan tanpa JavaScript. Screenshot/laporan mentah ada di `.local-backup/qa/` (ignored).
+
+Suite motion juga memeriksa animasi yang benar-benar berjalan, trace dengan keyboard, reveal sekali tampil, dan pembatalan saat reduced-motion berubah. Jika port default sedang dipakai dev server, jalankan preview pada port lain dan atur `PORTFOLIO_PREVIEW_URL` ke URL preview tersebut sebelum tes (contoh PowerShell: `$env:PORTFOLIO_PREVIEW_URL='http://127.0.0.1:4322'`).
 
 `npm test` memeriksa local links/anchors, metadata unik, sitemap, image alt/dimensions, serta hash PDF. `npm run lint` memeriksa formatting; `npm run check` memeriksa Astro/TypeScript. Hasil aktual: [docs/qa.md](docs/qa.md).
 

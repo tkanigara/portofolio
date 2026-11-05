@@ -2411,6 +2411,71 @@ figcaption {
     font-size: 15px;
   }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .button,
+  .theme-toggle,
+  .filters button {
+    transition:
+      color 160ms ease,
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+  .text-link .arrow,
+  .button .arrow {
+    transition: translate 160ms ease;
+  }
+  .text-link:is(:hover, :focus-visible) .arrow,
+  .button:is(:hover, :focus-visible) .arrow {
+    translate: 3px 0;
+  }
+  .button:is(:hover, :focus-visible) .arrow.down {
+    translate: 0 3px;
+  }
+  .text-link:is(:hover, :focus-visible) .arrow.up-right {
+    translate: 2px -2px;
+  }
+  .menu-toggle span {
+    transition: rotate 180ms ease;
+  }
+  .menu-toggle[aria-expanded="true"] span {
+    rotate: 45deg;
+  }
+  @media (max-width: 800px) {
+    .js .header-inner nav.is-open {
+      animation: menu-enter 180ms ease-out;
+    }
+  }
+}
+@keyframes menu-enter {
+  from {
+    opacity: 0.6;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.diagram-play {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 26px;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: var(--diagram-bg);
+  color: var(--diagram-ink);
+  font: 10px var(--mono);
+  text-align: left;
+}
+.diagram-play:hover {
+  background: color-mix(in srgb, var(--accent) 10%, var(--diagram-bg));
+}
+.diagram-play:focus-visible {
+  outline-offset: -4px;
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

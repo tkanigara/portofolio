@@ -16,7 +16,12 @@ const positions = [
 const columns = [70, 190, 310, 430];
 ---
 
-<div class:list={["project-media", `media-${project.media}`, { compact }]}>
+<div
+  class:list={["project-media", `media-${project.media}`, { compact }]}
+  data-diagram={
+    ["mai", "ffnn"].includes(project.media) ? project.media : undefined
+  }
+>
   {project.media === "mai" && (
     <div
       class="workflow"
@@ -26,18 +31,18 @@ const columns = [70, 190, 310, 430];
       <div class="diagram-label">
         DATA → DECISIONS <span>Conceptual workflow</span>
       </div>
-      <div class="flow-start">
+      <div class="flow-start" data-flow-stage>
         <span class="node-index">01</span>
         <span>Client onboarding</span>
         <span aria-hidden="true">↘</span>
       </div>
-      <div class="flow-inputs">
+      <div class="flow-inputs" data-flow-stage>
         <span>CSV upload</span>
         <span class="flow-or">/</span>
         <span>API sync</span>
       </div>
       <div class="flow-bottom">
-        <div>
+        <div data-flow-stage>
           <span class="node-index">02</span>
           <strong>Manage data</strong>
           <small>Review & correct</small>
@@ -45,7 +50,7 @@ const columns = [70, 190, 310, 430];
         <span class="connector" aria-hidden="true">
           →
         </span>
-        <div>
+        <div data-flow-stage>
           <span class="node-index">03</span>
           <strong>KPI analytics</strong>
           <small>Configure & explore</small>
@@ -53,7 +58,7 @@ const columns = [70, 190, 310, 430];
         <span class="connector" aria-hidden="true">
           →
         </span>
-        <div>
+        <div data-flow-stage>
           <span class="node-index">04</span>
           <strong>Generate reports</strong>
           <small>AI-assisted insights</small>
@@ -102,6 +107,7 @@ const columns = [70, 190, 310, 430];
                   y2={y2}
                   stroke="currentColor"
                   stroke-opacity=".22"
+                  data-edge={c}
                 />
               )),
             ),
@@ -186,5 +192,11 @@ const columns = [70, 190, 310, 430];
         C / GNU toolchain <span>indah8</span>
       </div>
     </div>
+  )}
+  {["mai", "ffnn"].includes(project.media) && (
+    <button class="diagram-play" type="button" hidden>
+      {project.media === "mai" ? "Trace workflow" : "Trace forward + backward"}
+      <span aria-hidden="true">↻</span>
+    </button>
   )}
 </div>

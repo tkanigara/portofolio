@@ -33,3 +33,9 @@ Accessibility: progressive HTML first, visible focus, skip link, native buttons,
 - Host Node 20 is too old for stable Astro 7.4.5; Node 24.22.2 LTS downloaded locally from nodejs.org with SHA-256 verified against SHASUMS256.txt. No global runtime changed.
 
 QA, provenance and deployment details are recorded in README and docs/qa.md when complete.
+
+## Motion enhancement — owner-approved follow-up
+
+Keep the editorial system. Hero: 400ms entrance, up to 100ms stagger, 10px travel. Four one-time reveals around selected work/experience: 360ms, 12px. CTA/menu feedback: 160–180ms. Use native Web Animations as progressive enhancement; no CSS-hidden content or reveal on every card.
+
+Diagram motion explains sequence: MAI traces onboarding → ingestion → data → KPIs → report; FFNN traces forward connections then backpropagation. Replay buttons and fine-pointer hover run a finite sequence, without loops or fabricated results. Reduced-motion skips entrances/reveals/traces, cancels active effects on preference changes, and retains complete static diagrams. No dependency or production change.
