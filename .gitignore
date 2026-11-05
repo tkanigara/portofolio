@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.tools/
+.local-backup/
+.codex/
+.agents/
+test-results/
+playwright-report/
+.env
+.env.*
+!.env.example
+portfolio_codex_pack.zip
+*.log

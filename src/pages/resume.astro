@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Arrow from "../components/Arrow.astro";
+import resumes from "../data/resumes.json";
+import { local } from "../utils/paths";
+import { site } from "../data/site";
+---
+
+<Layout
+  title="Resume"
+  description="View or download Timur Kanigara’s AI Engineer, Frontend Engineer, and Fullstack / Software Engineer resumes as original PDF documents."
+>
+  <div class="shell page-content resume-page">
+    <header class="page-intro">
+      <p class="eyebrow">EXPERIENCE, ON PAPER</p>
+      <h1>
+        One engineer.
+        <br />
+        <em>Three perspectives.</em>
+      </h1>
+      <p>
+        Choose the resume closest to your role. Each PDF focuses on a different
+        part of my work across software, interfaces, and applied AI.
+      </p>
+    </header>
+    <div class="resume-list">
+      {resumes.map((resume, index) => (
+        <article
+          class:list={[
+            "resume-row",
+            { highlighted: resume.key === "Fullstack" },
+          ]}
+        >
+          <div class="resume-number">
+            0{index + 1}
+            <span>PDF</span>
+          </div>
+          <div class="resume-description">
+            {resume.key === "Fullstack" && (
+              <p class="eyebrow">START HERE / GENERAL SOFTWARE ROLES</p>
+            )}
+            <h2>{resume.label}</h2>
+            <p>{resume.description}</p>
+            <span class="small-note">
+              {resume.href
+                ? `Original PDF · ${Math.ceil(resume.size / 1024)} KB`
+                : "PDF currently unavailable"}
+            </span>
+          </div>
+          <div class="resume-actions">
+            {resume.href ? (
+              <>
+                <a
+                  class="text-link"
+                  href={local(resume.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${resume.label} resume PDF`}
+                >
+                  View PDF <Arrow direction="up-right" />
+                </a>
+                <a
+                  class="button"
+                  href={local(resume.href)}
+                  download
+                  aria-label={`Download ${resume.label} resume PDF`}
+                >
+                  Download <Arrow direction="down" />
+                </a>
+              </>
+            ) : (
+              <p class="small-note">
+                Please <a href={`mailto:${site.email}`}>email me</a> for this
+                version.
+              </p>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="resume-note">
+      Looking for a particular project or experience?{" "}
+      <a href={`mailto:${site.email}`}>
+        Get in touch <span aria-hidden="true">↗</span>
+      </a>
+    </p>
+  </div>
+</Layout>

@@ -1,0 +1,328 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import { local } from "../utils/paths";
+import Arrow from "../components/Arrow.astro";
+import sansFont from "../assets/fonts/dm-sans.woff2?url";
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(
+  noindex ? local("/404.html") : Astro.url.pathname,
+  Astro.site,
+);
+const socialImage = new URL(local("/media/social-card.png"), Astro.site);
+const home = local("/");
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        let saved;
+        try {
+          saved = localStorage.getItem("theme");
+        } catch {}
+        const theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+    <title>{title} — Timur Kanigara</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow"}
+    />
+    <meta
+      name="theme-color"
+      content="#FAF9F6"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#151917"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={local("/favicon.svg")} type="image/svg+xml" />
+    <link
+      rel="icon"
+      href={local("/favicon.png")}
+      type="image/png"
+      sizes="32x32"
+    />
+    <link
+      rel="apple-touch-icon"
+      href={local("/apple-touch-icon.png")}
+      sizes="180x180"
+    />
+    <link rel="sitemap" href={local("/sitemap.xml")} />
+    <link
+      rel="preload"
+      href={sansFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:site_name"
+      content="Timur Kanigara · Software Engineer"
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={`${title} — Timur Kanigara`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Timur Kanigara, software engineer: web systems and practical AI. Fourth-year Informatics Engineering student at ITB."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} — Timur Kanigara`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: site.name,
+        url: site.url,
+        sameAs: [site.github, site.linkedin],
+        alumniOf: undefined,
+        affiliation: {
+          "@type": "CollegeOrUniversity",
+          name: "Institut Teknologi Bandung",
+        },
+        description:
+          "Software engineer and fourth-year Informatics Engineering student at ITB.",
+      })}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href={home} aria-label="T.K. — Timur Kanigara home">
+          T.K<span>.</span>
+        </a>
+        <nav aria-label="Main navigation" id="main-navigation">
+          <a
+            href={`${home}#work`}
+            aria-current={path.includes("/projects") ? "page" : undefined}
+          >
+            Work
+          </a>
+          <a href={`${home}#experience`}>Experience</a>
+          <a href={`${home}#about`}>About</a>
+          <a
+            href={local("/resume/")}
+            aria-current={path.includes("/resume") ? "page" : undefined}
+          >
+            Resume
+          </a>
+          <a href={`${home}#contact`}>
+            Contact <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+        <div class="header-controls">
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Switch color theme"
+            hidden
+          >
+            <svg
+              class="sun"
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="4"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <svg
+              class="moon"
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M20 14.4A8.5 8.5 0 019.6 4 8.5 8.5 0 1020 14.4Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+            hidden
+          >
+            Menu <span aria-hidden="true">+</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer" id="contact">
+      <div class="shell">
+        <div class="section-label">
+          <span>LET’S CONNECT</span>
+          <span>WEB / SOFTWARE / APPLIED AI</span>
+        </div>
+        <div class="contact-grid">
+          <h2>
+            Have something
+            <br />
+            in <em>mind?</em>
+          </h2>
+          <div>
+            <p>
+              I’d love to hear about your team, a useful problem, or an idea
+              worth building.
+            </p>
+            <a class="email-link" href={`mailto:${site.email}`}>
+              {site.email}
+              <Arrow direction="up-right" />
+            </a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <a
+            class="brand"
+            href={home}
+            aria-label="T.K. — Back to Timur Kanigara home"
+          >
+            T.K<span>.</span>
+          </a>
+          <span>© {new Date().getFullYear()} Muhammad Timur Kanigara</span>
+          <div>
+            <a href={site.github} target="_blank" rel="noopener noreferrer">
+              GitHub ↗
+            </a>
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn ↗
+            </a>
+            <a href={local("/resume/")}>
+              Resume <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const root = document.documentElement;
+      const themeButton =
+        document.querySelector<HTMLButtonElement>(".theme-toggle");
+      const preference = matchMedia("(prefers-color-scheme: dark)");
+      let explicitTheme = false;
+      try {
+        explicitTheme = ["light", "dark"].includes(
+          localStorage.getItem("theme") || "",
+        );
+      } catch {}
+      function updateThemeButton() {
+        if (themeButton)
+          themeButton.setAttribute(
+            "aria-label",
+            `Switch to ${root.dataset.theme === "dark" ? "light" : "dark"} theme`,
+          );
+      }
+      if (themeButton) {
+        themeButton.hidden = false;
+        updateThemeButton();
+        themeButton.addEventListener("click", () => {
+          root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+          explicitTheme = true;
+          try {
+            localStorage.setItem("theme", root.dataset.theme);
+          } catch {}
+          updateThemeButton();
+        });
+      }
+      preference.addEventListener("change", (event) => {
+        if (!explicitTheme) {
+          root.dataset.theme = event.matches ? "dark" : "light";
+          updateThemeButton();
+        }
+      });
+      const menu = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const nav = document.querySelector<HTMLElement>("#main-navigation");
+      function closeMenu(restoreFocus = false) {
+        menu?.setAttribute("aria-expanded", "false");
+        nav?.classList.remove("is-open");
+        if (restoreFocus) menu?.focus();
+      }
+      if (menu && nav) {
+        menu.hidden = false;
+        menu.addEventListener("click", () => {
+          const open = menu.getAttribute("aria-expanded") !== "true";
+          menu.setAttribute("aria-expanded", String(open));
+          nav.classList.toggle("is-open", open);
+          if (open) nav.querySelector<HTMLAnchorElement>("a")?.focus();
+        });
+        nav
+          .querySelectorAll("a")
+          .forEach((link) => link.addEventListener("click", () => closeMenu()));
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            menu.getAttribute("aria-expanded") === "true"
+          )
+            closeMenu(true);
+        });
+        document.addEventListener("click", (event) => {
+          if (
+            event.target instanceof Node &&
+            !nav.contains(event.target) &&
+            !menu.contains(event.target)
+          )
+            closeMenu();
+        });
+        matchMedia("(min-width: 801px)").addEventListener("change", () =>
+          closeMenu(),
+        );
+      }
+    </script>
+  </body>
+</html>

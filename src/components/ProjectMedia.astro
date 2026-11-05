@@ -1,0 +1,190 @@
+---
+import type { Project } from "../data/projects";
+import { local } from "../utils/paths";
+interface Props {
+  project: Project;
+  compact?: boolean;
+  priority?: boolean;
+}
+const { project, compact = false, priority = false } = Astro.props;
+const positions = [
+  [38, 83, 128],
+  [23, 61, 99, 137],
+  [38, 83, 128],
+  [61, 105],
+];
+const columns = [70, 190, 310, 430];
+---
+
+<div class:list={["project-media", `media-${project.media}`, { compact }]}>
+  {project.media === "mai" && (
+    <div
+      class="workflow"
+      role="img"
+      aria-label="Conceptual workflow: client onboarding, CSV or API data ingestion, data management, KPI analytics and corrections, AI-assisted report generation."
+    >
+      <div class="diagram-label">
+        DATA → DECISIONS <span>Conceptual workflow</span>
+      </div>
+      <div class="flow-start">
+        <span class="node-index">01</span>
+        <span>Client onboarding</span>
+        <span aria-hidden="true">↘</span>
+      </div>
+      <div class="flow-inputs">
+        <span>CSV upload</span>
+        <span class="flow-or">/</span>
+        <span>API sync</span>
+      </div>
+      <div class="flow-bottom">
+        <div>
+          <span class="node-index">02</span>
+          <strong>Manage data</strong>
+          <small>Review & correct</small>
+        </div>
+        <span class="connector" aria-hidden="true">
+          →
+        </span>
+        <div>
+          <span class="node-index">03</span>
+          <strong>KPI analytics</strong>
+          <small>Configure & explore</small>
+        </div>
+        <span class="connector" aria-hidden="true">
+          →
+        </span>
+        <div>
+          <span class="node-index">04</span>
+          <strong>Generate reports</strong>
+          <small>AI-assisted insights</small>
+        </div>
+      </div>
+      <div class="diagram-foot">
+        React interface <span>FastAPI / PostgreSQL</span>
+      </div>
+    </div>
+  )}
+  {project.media === "nimonspedia" && (
+    <img
+      src={local("/media/nimonspedia-discovery-1280.webp")}
+      srcset={`${local("/media/nimonspedia-discovery-640.webp")} 640w, ${local("/media/nimonspedia-discovery-800.webp")} 800w, ${local("/media/nimonspedia-discovery-1280.webp")} 1280w, ${local("/media/nimonspedia-discovery-1920.webp")} 1920w`}
+      sizes={
+        compact
+          ? "(max-width: 700px) 90vw, 60vw"
+          : "(max-width: 700px) 90vw, 1240px"
+      }
+      width="2841"
+      height="1614"
+      alt="Actual Nimonspedia product discovery page, with category and price filters beside product results."
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+    />
+  )}
+  {project.media === "ffnn" && (
+    <div
+      class="network"
+      role="img"
+      aria-label="Conceptual dense neural network: inputs pass through configurable hidden layers to outputs; gradients propagate backward during training."
+    >
+      <div class="diagram-label">
+        FFNN / FROM SCRATCH <span>Conceptual architecture</span>
+      </div>
+      <svg viewBox="0 0 500 175" fill="none" aria-hidden="true">
+        {columns
+          .slice(0, -1)
+          .map((x, c) =>
+            positions[c].flatMap((y) =>
+              positions[c + 1].map((y2) => (
+                <line
+                  x1={x}
+                  y1={y}
+                  x2={columns[c + 1]}
+                  y2={y2}
+                  stroke="currentColor"
+                  stroke-opacity=".22"
+                />
+              )),
+            ),
+          )}
+        {columns.map((x, c) =>
+          positions[c].map((y) => (
+            <circle
+              cx={x}
+              cy={y}
+              r="9"
+              stroke="currentColor"
+              stroke-width="1.5"
+              fill="var(--diagram-bg)"
+            />
+          )),
+        )}
+      </svg>
+      <div class="network-labels">
+        <span>Input</span>
+        <span>Hidden layers</span>
+        <span>Output</span>
+      </div>
+      <div class="training-line">
+        <span>Forward pass →</span>
+        <span>← Backpropagation</span>
+      </div>
+      <div class="diagram-foot">
+        NumPy <span>Gradient descent / Adam</span>
+      </div>
+    </div>
+  )}
+  {project.media === "alchemy" && (
+    <img
+      src={local("/media/little-alchemy-1280.webp")}
+      srcset={`${local("/media/little-alchemy-640.webp")} 640w, ${local("/media/little-alchemy-800.webp")} 800w, ${local("/media/little-alchemy-1280.webp")} 1280w, ${local("/media/little-alchemy-1920.webp")} 1440w`}
+      sizes="(max-width: 700px) 90vw, 65vw"
+      width="1440"
+      height="1000"
+      alt="Actual Little Alchemy Solver live interface with element selection and graph-search controls."
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+    />
+  )}
+  {project.media === "ats" && (
+    <div
+      class="type-diagram"
+      role="img"
+      aria-label="Conceptual document workflow: PDF, text extraction, KMP or Boyer–Moore matching, candidate review."
+    >
+      <span class="diagram-label">
+        DOCUMENT → MATCH <span>Conceptual workflow</span>
+      </span>
+      <div class="document-flow">
+        <span>PDF</span>
+        <i aria-hidden="true">→</i>
+        <span>Text</span>
+        <i aria-hidden="true">→</i>
+        <span>KMP / BM</span>
+      </div>
+      <p>Parse. Match. Review.</p>
+      <div class="diagram-foot">
+        PyMuPDF <span>Python / MySQL</span>
+      </div>
+    </div>
+  )}
+  {project.media === "luma" && (
+    <div
+      class="type-diagram"
+      role="img"
+      aria-label="Conceptual operating system layers: shell, filesystem and processes, kernel and memory, x86 hardware in QEMU."
+    >
+      <span class="diagram-label">
+        BELOW THE SURFACE <span>Conceptual system layers</span>
+      </span>
+      <div class="system-layers">
+        <span>Shell</span>
+        <span>Filesystem / Processes</span>
+        <span>Kernel / Memory</span>
+        <span>x86 · QEMU</span>
+      </div>
+      <div class="diagram-foot">
+        C / GNU toolchain <span>indah8</span>
+      </div>
+    </div>
+  )}
+</div>

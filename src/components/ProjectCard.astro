@@ -1,0 +1,43 @@
+---
+import type { Project } from "../data/projects";
+import ProjectMedia from "./ProjectMedia.astro";
+import Arrow from "./Arrow.astro";
+import { local } from "../utils/paths";
+interface Props {
+  project: Project;
+  index: number;
+  class?: string;
+}
+const { project, index, class: className } = Astro.props;
+---
+
+<article class:list={["work-card", className]}>
+  {["nimonspedia", "alchemy"].includes(project.media) ? (
+    <a
+      class="media-link"
+      href={local(`/projects/${project.slug}/`)}
+      aria-label={`Read ${project.title} case study`}
+    >
+      <ProjectMedia project={project} compact />
+    </a>
+  ) : (
+    <ProjectMedia project={project} compact />
+  )}
+  <div class="work-card-copy">
+    <div class="eyebrow">
+      <span>{String(index).padStart(2, "0")}</span>
+      <span>{project.context}</span>
+    </div>
+    <h3>
+      <a href={local(`/projects/${project.slug}/`)}>
+        {project.title}
+        <Arrow />
+      </a>
+    </h3>
+    <p>{project.summary}</p>
+    <p class="stack">{project.stack.join(" / ")}</p>
+    <a class="text-link" href={local(`/projects/${project.slug}/`)}>
+      Read case study <Arrow />
+    </a>
+  </div>
+</article>

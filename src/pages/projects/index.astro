@@ -1,0 +1,107 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects } from "../../data/projects";
+---
+
+<Layout
+  title="Projects"
+  description="Explore Timur Kanigara’s web, machine learning, and systems projects: MAI analytics, Nimonspedia, a NumPy neural network, Little Alchemy, CV ATS, and Luma_OSjang."
+>
+  <div class="shell page-content">
+    <header class="page-intro">
+      <p class="eyebrow">THE PROJECT INDEX / 06 ENTRIES</p>
+      <h1>
+        Built to <em>understand.</em>
+        <br />
+        Built to be useful.
+      </h1>
+      <p>
+        A selection of professional and collaborative projects, from the browser
+        to the kernel. Each story follows the system, the decisions, and the
+        evidence.
+      </p>
+    </header>
+    <div class="project-tools" hidden>
+      <div
+        class="filters"
+        role="group"
+        aria-label="Filter projects by category"
+      >
+        {["All", "Web", "AI & ML", "Systems"].map((category) => (
+          <button
+            type="button"
+            data-category={category}
+            aria-pressed={category === "All"}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      <label class="search-label">
+        <span class="sr-only">Search projects</span>
+        <input
+          type="search"
+          id="project-search"
+          placeholder="Search projects…"
+          autocomplete="off"
+        />
+      </label>
+    </div>
+    <p class="filter-status small-note" aria-live="polite" hidden>
+      Showing all 6 projects
+    </p>
+    <div class="project-index">
+      {projects.map((project, index) => (
+        <div
+          class="project-entry"
+          data-category={project.category}
+          data-search={`${project.title} ${project.summary} ${project.stack.join(" ")}`.toLowerCase()}
+        >
+          <ProjectCard project={project} index={index + 1} />
+        </div>
+      ))}
+    </div>
+    <p class="empty-projects" hidden>
+      No projects match this search. Try another word or select All.
+    </p>
+  </div>
+</Layout>
+<script>
+  const tools = document.querySelector<HTMLElement>(".project-tools");
+  const search = document.querySelector<HTMLInputElement>("#project-search");
+  const buttons =
+    document.querySelectorAll<HTMLButtonElement>(".filters button");
+  const items = document.querySelectorAll<HTMLElement>(".project-entry");
+  const status = document.querySelector<HTMLElement>(".filter-status");
+  const empty = document.querySelector<HTMLElement>(".empty-projects");
+  let category = "All";
+  if (tools && status) {
+    tools.hidden = false;
+    status.hidden = false;
+  }
+  function filter() {
+    const query = search?.value.toLowerCase().trim() || "";
+    let shown = 0;
+    items.forEach((item) => {
+      const visible =
+        (category === "All" || item.dataset.category === category) &&
+        (item.dataset.search || "").includes(query);
+      item.hidden = !visible;
+      if (visible) shown++;
+    });
+    if (status)
+      status.textContent = `Showing ${shown} of ${items.length} projects`;
+    if (empty) empty.hidden = shown > 0;
+  }
+  buttons.forEach((button) =>
+    button.addEventListener("click", () => {
+      category = button.dataset.category || "All";
+      buttons.forEach((other) =>
+        other.setAttribute("aria-pressed", String(button === other)),
+      );
+      filter();
+    }),
+  );
+  search?.addEventListener("input", filter);
+</script>

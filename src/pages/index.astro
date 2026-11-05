@@ -1,0 +1,267 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import ProjectMedia from "../components/ProjectMedia.astro";
+import Arrow from "../components/Arrow.astro";
+import { featured } from "../data/projects";
+import { leadership } from "../data/site";
+import { local } from "../utils/paths";
+const [mai, nimonspedia, ffnn, alchemy] = featured;
+---
+
+<Layout
+  title="Software Engineer · Web & Applied AI"
+  description="Timur Kanigara is a software engineer and fourth-year ITB Informatics Engineering student building web applications, data systems, and practical AI workflows."
+>
+  <div class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow hero-intro">
+          MUHAMMAD TIMUR KANIGARA <span>/ SOFTWARE ENGINEER</span>
+        </p>
+        <h1 id="hero-title">
+          Web systems.
+          <br />
+          Practical <em>AI.</em>
+        </h1>
+        <p class="hero-description">
+          I build the interfaces, services, and data workflows that turn complex
+          problems into useful software.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">
+            Explore my work <Arrow direction="down" />
+          </a>
+          <a class="text-link" href={local("/resume/")}>
+            View resume <Arrow />
+          </a>
+        </div>
+        <p class="hero-context">
+          Fourth-year Informatics Engineering
+          <br />
+          <span>Institut Teknologi Bandung</span>
+        </p>
+      </div>
+      <figure class="portrait">
+        <div class="portrait-top">
+          <span>THE PERSON BEHIND THE CODE</span>
+          <span>01 / TK</span>
+        </div>
+        <img
+          src={local("/media/portrait-480.webp")}
+          srcset={`${local("/media/portrait-320.webp")} 320w, ${local("/media/portrait-480.webp")} 480w, ${local("/media/portrait-720.webp")} 720w`}
+          sizes="(max-width: 600px) 230px, (max-width: 1000px) 280px, 330px"
+          width="1366"
+          height="2048"
+          alt="Muhammad Timur Kanigara wearing a black jacket and white shirt."
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption>
+          <span>Timur Kanigara</span>
+          <span>Curious. Always building.</span>
+        </figcaption>
+      </figure>
+    </section>
+    <section
+      class="work-section section"
+      id="work"
+      aria-labelledby="work-title"
+    >
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">
+            <span>01</span> SELECTED WORK
+          </p>
+          <h2 id="work-title">Ideas, made tangible.</h2>
+        </div>
+        <a class="text-link" href={local("/projects/")}>
+          All projects <span class="count">06</span>
+          <Arrow />
+        </a>
+      </div>
+      <article class="work-featured">
+        <div class="featured-copy">
+          <p class="eyebrow">PROFESSIONAL WORK / 2026</p>
+          <h3>
+            <a href={local("/projects/mai-analytics/")}>
+              One workflow.
+              <br />
+              From data to decisions.
+            </a>
+          </h3>
+          <p class="project-name">MAI · Multi-client analytics</p>
+          <p>{mai.summary}</p>
+          <p class="stack">{mai.stack.join(" / ")}</p>
+          <a class="text-link" href={local("/projects/mai-analytics/")}>
+            Read case study <Arrow />
+          </a>
+        </div>
+        <ProjectMedia project={mai} />
+      </article>
+      <div class="selected-grid">
+        <ProjectCard project={nimonspedia} index={2} class="commerce-card" />
+        <ProjectCard project={ffnn} index={3} class="network-card" />
+      </div>
+      <ProjectCard project={alchemy} index={4} class="alchemy-card" />
+    </section>
+    <section
+      class="section experience-section"
+      id="experience"
+      aria-labelledby="experience-title"
+    >
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">
+            <span>02</span> EXPERIENCE
+          </p>
+          <h2 id="experience-title">Building. Learning. Sharing.</h2>
+        </div>
+        <span class="small-note">Industry & academia</span>
+      </div>
+      <div class="experience-row main-experience">
+        <div class="experience-meta">
+          <span>2026</span>
+          <span>MAI</span>
+        </div>
+        <div>
+          <h3>AI Software Engineer</h3>
+          <p>
+            Worked across a React interface and FastAPI services to connect
+            client data ingestion, configurable KPI analytics, data corrections,
+            and automated AI-assisted reporting.
+          </p>
+          <a class="text-link" href={local("/projects/mai-analytics/")}>
+            Explore the workflow <Arrow />
+          </a>
+        </div>
+        <span class="role-type">Professional</span>
+      </div>
+      <div class="experience-row">
+        <div class="experience-meta">
+          <span>SEP — DEC 2025</span>
+          <span>Institut Teknologi Bandung</span>
+        </div>
+        <div>
+          <h3>Practicum Assistant</h3>
+          <p>
+            Computational Thinking · Facilitated hands-on exercises, evaluated
+            assignments, and supported students through lab sessions.
+          </p>
+        </div>
+        <span class="role-type">Academic</span>
+      </div>
+      <div class="experience-row">
+        <div class="experience-meta">
+          <span>SEP — DEC 2025</span>
+          <span>Institut Teknologi Bandung</span>
+        </div>
+        <div>
+          <h3>Teaching Assistant</h3>
+          <p>
+            Socio-Informatics and Professionalism · Supported course delivery,
+            assignment feedback, examinations, and tutorials.
+          </p>
+        </div>
+        <span class="role-type">Academic</span>
+      </div>
+    </section>
+    <section
+      class="section expertise-section"
+      id="expertise"
+      aria-labelledby="expertise-title"
+    >
+      <div class="expertise-intro">
+        <p class="eyebrow">
+          <span>03</span> EXPERTISE
+        </p>
+        <h2 id="expertise-title">
+          Across the
+          <br />
+          software stack.
+        </h2>
+        <p>
+          I enjoy working where a clear interface meets a well-considered
+          system.
+        </p>
+      </div>
+      <div class="expertise-list">
+        <div>
+          <span class="expertise-number">01 /</span>
+          <h3>Frontend</h3>
+          <p>Responsive interfaces that make complex workflows approachable.</p>
+          <span class="stack">React · JavaScript · HTML · CSS</span>
+        </div>
+        <div>
+          <span class="expertise-number">02 /</span>
+          <h3>Fullstack</h3>
+          <p>
+            APIs, relational data, and the connections that make applications
+            work.
+          </p>
+          <span class="stack">
+            FastAPI · PHP · PostgreSQL · SQLAlchemy · Docker
+          </span>
+        </div>
+        <div>
+          <span class="expertise-number">03 /</span>
+          <h3>Applied AI</h3>
+          <p>
+            From neural network fundamentals to AI-assisted analytics and
+            reporting.
+          </p>
+          <span class="stack">
+            Python · NumPy · scikit-learn · Data workflows
+          </span>
+        </div>
+      </div>
+    </section>
+    <section
+      class="section about-section"
+      id="about"
+      aria-labelledby="about-title"
+    >
+      <div class="about-copy">
+        <p class="eyebrow">
+          <span>04</span> A LITTLE ABOUT ME
+        </p>
+        <h2 id="about-title">
+          An engineer.
+          <br />A student.
+          <br />
+          <em>A team player.</em>
+        </h2>
+        <p>
+          I’m Timur, a fourth-year Informatics Engineering student at ITB. I
+          like understanding how things work, then turning that understanding
+          into something people can use.
+        </p>
+        <p>
+          That curiosity has taken me from web applications and professional
+          analytics workflows to neural networks and operating systems. Beyond
+          the code, I stay involved in student organizations and enjoy making
+          things happen with a team.
+        </p>
+        <a class="text-link" href={local("/resume/")}>
+          More in my resume <Arrow />
+        </a>
+      </div>
+      <div class="leadership">
+        <p class="eyebrow">LEADERSHIP & INVOLVEMENT</p>
+        {leadership.map((item) => (
+          <div class="leadership-row">
+            <span>{item.year}</span>
+            <div>
+              <h3>{item.role}</h3>
+              <p>{item.organization}</p>
+            </div>
+          </div>
+        ))}
+        <p class="leadership-note">
+          Different settings. The same value of doing good work together.
+        </p>
+      </div>
+    </section>
+  </div>
+</Layout>

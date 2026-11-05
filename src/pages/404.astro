@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Arrow from "../components/Arrow.astro";
+import { local } from "../utils/paths";
+---
+
+<Layout
+  title="Page not found"
+  description="This page could not be found. Return to Timur Kanigara’s portfolio or explore the project index."
+  noindex
+>
+  <section class="shell not-found">
+    <p class="eyebrow">404 / A WRONG TURN</p>
+    <h1>
+      This page
+      <br />
+      is <em>unwritten.</em>
+    </h1>
+    <p>The link may have moved. There’s still plenty of work to explore.</p>
+    <div class="hero-actions">
+      <a class="button primary" href={local("/")}>
+        Back home <Arrow />
+      </a>
+      <a class="text-link" href={local("/projects/")}>
+        Project index <Arrow />
+      </a>
+    </div>
+  </section>
+</Layout>
