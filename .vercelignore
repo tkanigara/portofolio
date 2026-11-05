@@ -1,0 +1,13 @@
+.local-backup
+.tools
+.codex
+.agents
+node_modules
+dist
+test-results
+playwright-report
+.git
+.env
+.env.*
+*.log
+portfolio_codex_pack.zip

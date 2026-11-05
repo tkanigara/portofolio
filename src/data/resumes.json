@@ -1,0 +1,23 @@
+[
+  {
+    "key": "Fullstack",
+    "label": "Fullstack / Software Engineer",
+    "description": "APIs, databases, web applications, and the systems connecting them.",
+    "href": "/resumes/Muhammad-Timur-Kanigara-Fullstack.pdf",
+    "size": 69282
+  },
+  {
+    "key": "FE",
+    "label": "Frontend Engineer",
+    "description": "React interfaces, responsive web experiences, and product implementation.",
+    "href": "/resumes/Muhammad-Timur-Kanigara-FE.pdf",
+    "size": 69429
+  },
+  {
+    "key": "AI",
+    "label": "AI Engineer",
+    "description": "Applied AI workflows, neural network fundamentals, and data processing.",
+    "href": "/resumes/Muhammad-Timur-Kanigara-AI.pdf",
+    "size": 70978
+  }
+]
